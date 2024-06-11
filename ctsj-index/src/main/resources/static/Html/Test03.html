@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue Infinite Scroll</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <ul>
+    <li v-for="item in list">{{ item }}</li>
+  </ul>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      list: [],
+      count: 0,
+    },
+    created() {
+      this.addItems();
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      addItems() {
+        for (let i = 0; i < 10; i++, this.count++) {
+          this.list.push(this.count);
+        }
+      },
+      handleScroll() {
+        let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight;
+
+        if (bottomOfWindow) {
+          this.addItems();
+        }
+      },
+    },
+  });
+</script>
+</body>
+</html>
