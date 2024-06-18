@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html >
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>CTSJ资源社区</title>
-    <!--这里引入页面的样式-->
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
         #app{
             border: 2px red solid;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .infinite-list{
+        .post-list{
             list-style-type: none;
             font-size: 30px;
         }
-        .infinite-list-item{
+        .post-item{
             background-color: gainsboro;
             margin-left: 8%;
             margin-right: 8%;
@@ -20,25 +30,37 @@
             height: 100px;
             margin-top: 20px;
             border: 1px blue solid;
+            border-radius: 10px;
+        }
+        .post-title {
+            font-size: 24px;
+            margin-top: -20px;
+            font-weight: bold;
+            border: red 2px solid;
+            text-align: center;
+            color: #333;
+        }
+        .post-content {
+            font-size: 18px;
+            color: #666;
         }
     </style>
 </head>
-<!--引入相关的文件-->
 <script src="../js/vue.js"></script>
 <script src="../element-ui/lib/index.js"></script>
 <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
 <script src="../js/axios-0.18.0.js"></script>
-
 <body>
-        <div id="app">
-            <template>
-                <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-                    <li v-for="i in count" class="infinite-list-item" @click="find(i)">
-                        学习{{ i }}:{{text[i-1]}}
-                    </li>
-                </ul>
-            </template>
-        </div>
+<div id="app">
+    <template>
+        <ul class="post-list" v-infinite-scroll="load" style="overflow:auto">
+            <li v-for="i in count" class="post-item" @click="find(i)">
+                <div class="post-title">帖子标题 {{ i }}</div>
+                <div class="post-content">{{text[i-1]}}</div>
+            </li>
+        </ul>
+    </template>
+</div>
 </body>
 <script>
     new Vue({
@@ -46,7 +68,7 @@
         data() {
             return {
                 count: 0,
-                text:[0,'So',2,3,4,5,6,7,8,9,10]
+                text:['A','B','C','D','E','F','G','H','J','K','L']
             }
         },
         methods: {
@@ -56,12 +78,18 @@
                 }
             },
             find(i){
-                alert("学习"+i)
-                document.location.href="Testmain.html"
+                alert("帖子"+i)
+                document.location.href="Showtime.html"
+            },
+            finaAll(){
+                axios.get("../post/all").then(response=>{
+                    alert("find alll")
+                    console.log(response)
+                });
             }
         },
         mounted(){
-
+            this.finaAll();
         }
     });
 </script>
