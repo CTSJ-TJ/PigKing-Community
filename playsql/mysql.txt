@@ -1,2 +1,8 @@
 信息表：
 信息ID 信息title 信息passege url地址
+
+帖子表：
+帖子ID 帖子title 帖子passege 发布者ID 发布时间 点赞数 收藏数
+
+用户表
+用户ID 用户名称 用户密码 电话 邮箱
