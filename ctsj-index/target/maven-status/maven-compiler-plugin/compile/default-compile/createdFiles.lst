@@ -1,6 +1,0 @@
-com\example\ctsjindex\service\impl\PostServiceImpl.class
-com\example\ctsjindex\service\PostService.class
-com\example\ctsjindex\CtsjIndexApplication.class
-com\example\ctsjindex\entity\Posts.class
-com\example\ctsjindex\mapper\PostMapper.class
-com\example\ctsjindex\controller\PostController.class

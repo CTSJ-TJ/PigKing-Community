@@ -55,8 +55,8 @@
     <template>
         <ul class="post-list" v-infinite-scroll="load" style="overflow:auto">
             <li v-for="i in count" class="post-item" @click="find(i)">
-                <div class="post-title">帖子标题 {{ i }}</div>
-                <div class="post-content">{{text[i-1]}}</div>
+                <div class="post-title">帖子标题 :{{ title[i-1]}}</div>
+                <div class="post-content">{{passege[i-1]}}</div>
             </li>
         </ul>
     </template>
@@ -68,23 +68,27 @@
         data() {
             return {
                 count: 0,
-                text:['A','B','C','D','E','F','G','H','J','K','L']
+                title:[],
+                passege:[]
             }
         },
         methods: {
-            load () {
-                if(this.count<10) {
-                    this.count += 1
-                }
-            },
+            // load () {
+            //     if(this.count<10) {
+            //         this.count += 1
+            //     }
+            // },
             find(i){
                 alert("帖子"+i)
                 document.location.href="Showtime.html"
             },
             finaAll(){
-                axios.get("../post/all").then(response=>{
-                    alert("find alll")
-                    console.log(response)
+                axios.get("../post/findall").then(response=>{
+                    for (let post of response.data) {
+                       this.title.push(post.posttitle);
+                        this.passege.push(post.postpassege);
+                    }
+                    this.count=this.title.length;
                 });
             }
         },

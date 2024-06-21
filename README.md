@@ -1,14 +1,13 @@
 # CTSJ-Community
 
 #### 介绍
-个人资源社区项目，结合Spring全家桶，全数据库（即：mysql,oracle,sqlserver),多程序设计语言（主java，副python，少c/c++),人工智能（transformer训练模型，多智能API）
+个人资源社区项目，简称：CTSJ社区，结合Spring全家桶，全数据库（即：mysql,oracle,redis),多程序设计语言（主java，副python，少c/c++),人工智能（transformer训练模型，多智能API）
 
 #### 软件架构
 软件架构说明
-
+一个SpringBoot项目拆分成SpringCloud
 
 #### 安装教程
-
 1.  xxxx
 2.  xxxx
 3.  xxxx

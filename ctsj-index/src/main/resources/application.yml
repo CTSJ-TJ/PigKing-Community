@@ -15,4 +15,9 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:11010/eureka/
+
 
