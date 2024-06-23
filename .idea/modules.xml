@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ctsj-community.iml" filepath="$PROJECT_DIR$/.idea/ctsj-community.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ctsj-main/ctsj-main.iml" filepath="$PROJECT_DIR$/ctsj-main/ctsj-main.iml" />
     </modules>
   </component>
 </project>

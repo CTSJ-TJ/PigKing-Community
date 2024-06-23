@@ -1,0 +1,18 @@
+spring:
+  application:
+  name: ctsj-main
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///my_community
+    username: root
+    password: 123456
+
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:11010/eureka/
+
