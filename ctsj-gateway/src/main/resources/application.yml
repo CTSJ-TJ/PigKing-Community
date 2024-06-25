@@ -1,0 +1,6 @@
+spring:
+  application:
+   name: ctsj-gateway
+
+server:
+  port: 9999
