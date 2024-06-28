@@ -338,6 +338,7 @@
   <script  src="js/sakura.js"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/ajax.js"></script>
+  <script src="js/axios-0.18.0.js"></script>
   <script>
       $(function (){
         changepics();
@@ -377,18 +378,30 @@
           let uname = $(".login input[name='uname']").val();
           let upwd = $(".login input[name='upwd']").val();
           let usafe = $(".login input[name='ucheck']").val();
-        console.log(logvue.value)
+          console.log(logvue.value)
           if(logvue.value == "切换管理员登录"){
-              ajax("POST", "user", {uname: uname, upwd: upwd, usafe: usafe,op: 'login'}, function (rs) {
-                console.log(rs);
-                if (rs == 1) {
-                  alert("登入成功");
-                  window.location.href='html/buyGoods.html?uname=' + uname;
-                } else {
-                  alert("登入失败!!!");
-                  location.reload();
+              // ajax("POST", "user/login", {uname: uname, upwd: upwd, usafe: usafe}, function (rs) {
+              //   console.log("学习："+rs.data);
+              // });
+              axios.get("user/login",{
+                params:{
+                  username: uname,
+                  userpwd: upwd,
+                  usafe: usafe
                 }
+              }).then(response=>{
+                  let codes=response.data.code
+                  console.log("who:"+codes)
+                  if(codes==66){
+                    alert("验证码错误！！！")
+                    location.reload();
+                  }else {
+                      document.location.href='Html/Testmain.html';
+                  }
+                  console.log("white:"+response.data.data)
+                  console.log("white:" + JSON.stringify(response.data.data));
               });
+
           }else{
             ajax("POST", "user", {aname: uname, apwd: upwd, usafe: usafe,op: 'admlogin'}, function(rs){
               console.log(rs)
@@ -396,7 +409,6 @@
                 alert("登入成功!!!");
                 if(rs==1){
                   window.location.href = 'html/manager.html'
-
                 }else{
                   window.location.href = 'manager/main.html'
                 }

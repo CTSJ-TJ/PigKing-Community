@@ -16,3 +16,8 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:11010/eureka/
 
+# 映射文件位置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
