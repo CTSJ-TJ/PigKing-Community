@@ -10,6 +10,23 @@ public class Posts {
     private Integer userid;
     private Integer postlikes;
     private Integer collections;
+    private Integer status;
+
+    public String getPosttitle() {
+        return posttitle;
+    }
+
+    public void setPosttitle(String posttitle) {
+        this.posttitle = posttitle;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Integer getPostid() {
         return postid;
@@ -63,11 +80,12 @@ public class Posts {
     public String toString() {
         return "Posts{" +
                 "postid=" + postid +
-                ", posttile='" + posttitle + '\'' +
+                ", posttitle='" + posttitle + '\'' +
                 ", postpassege='" + postpassege + '\'' +
                 ", userid=" + userid +
                 ", postlikes=" + postlikes +
                 ", collections=" + collections +
+                ", status=" + status +
                 '}';
     }
 }

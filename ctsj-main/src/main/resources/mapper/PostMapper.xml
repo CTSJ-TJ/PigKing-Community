@@ -6,4 +6,12 @@
     <select id="findall" resultType="com.example.ctsjmain.entity.Posts">
         select * from mypost
     </select>
+
+    <select id="findId" parameterType="string" resultType="com.example.ctsjmain.entity.Posts">
+        select * from mypost where postid = #{postid}
+    </select>
+
+    <insert id="addpost" parameterType="com.example.ctsjmain.entity.Posts" useGeneratedKeys="true">
+          insert into mypost values(null,#{posttitle},#{postpassege},1001,curdate(),0,0,0)
+    </insert>
 </mapper>

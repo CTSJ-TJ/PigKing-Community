@@ -5,10 +5,16 @@ import com.example.ctsjmain.entity.Posts;
 import com.example.ctsjmain.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/post")
 public class PostController{
+
+    @Resource
+    RestTemplate restTemplate;
 
     @RequestMapping(value = "wg", method = RequestMethod.GET)
     public String hello(Posts posts) {
@@ -26,9 +32,36 @@ public class PostController{
         return postService.findall();
     }
 
-//    @RequestMapping("all")
-//    public List<Posts> findall(){
-//
-//    }
+    @RequestMapping("findId")
+    @ResponseBody
+    public Object getPost(@RequestParam("postid") String postId){
+        System.out.println("the postid:"+postId);
+        System.out.println("who:"+postService.findId(postId).toString());
+        return postService.findId(postId);
+    }
+
+    @RequestMapping("addpost")
+    @ResponseBody
+    public int AddPost(@RequestParam("posttitle") String posttitle,@RequestParam("postpassege") String postpassege){
+        System.out.println("the add:"+posttitle+","+postpassege);
+        Posts posts=new Posts();
+        posts.setPosttile(posttitle);
+        posts.setPostpassege(postpassege);
+        System.out.println("who add:"+postService.addpost(posts));
+        return postService.addpost(posts);
+    }
+
+
+    @RequestMapping("gateway")
+    public String user(){
+        return  restTemplate.getForObject(
+                "http://ctsj-gateway/",
+                String.class);
+    }
+
+    @RequestMapping("show")
+    String show(){
+        return "Showtime.html";
+    }
 
 }

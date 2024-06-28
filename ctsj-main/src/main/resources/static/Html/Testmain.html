@@ -47,17 +47,17 @@
 							<el-menu-item index="1" @click="changePages(1)"><i class="el-icon-coin"></i>社区论坛</el-menu-item>
 							<el-submenu index="2">
 							<template slot="title"><i class="el-icon-goods"></i>发布创作</template>
-								<el-menu-item index="2-1" @click="changePages(2)">Java开发</el-menu-item>
-								<el-menu-item index="2-2" @click="changePages(3)">Python基础</el-menu-item>
+								<el-menu-item index="2-1" @click="changePages(2)">创建帖子</el-menu-item>
+								<el-menu-item index="2-2" @click="changePages(3)">编辑帖子</el-menu-item>
 								<el-menu-item index="2-3" @click="changePages(4)">C/C++学习</el-menu-item>
 							</el-submenu>
 							<el-submenu index="3">
-							<template slot="title"><i class="el-icon-document-copy"></i>理论学习</template>
+							<template slot="title"><i class="el-icon-document-copy"></i>消息</template>
 								<el-menu-item index="3-1" @click="changePages(5)">面试必答</el-menu-item>
 								<el-menu-item index="3-2" @click="changePages(6)">强化训练</el-menu-item>
 							</el-submenu>
 							<el-submenu index="4">
-								<template slot="title"><i class="el-icon-document-copy"></i>四级宝典</template>
+								<template slot="title"><i class="el-icon-document-copy"></i>社区AI</template>
 								<el-menu-item index="3-1" @click="changePages(7)">新增单词</el-menu-item>
 								<el-menu-item index="3-2" @click="changePages(11)">单词翻译</el-menu-item>
 							</el-submenu>
@@ -86,7 +86,7 @@
 						if(i == 1){
 							this.mainsrc = "MySource.html"
 						} else if(i == 2){
-							this.mainsrc = "Study02.html"
+							this.mainsrc = "Editor.html"
 						} else if(i == 3){
 							this.mainsrc = "Study03.html"
 						} else if(i == 4){

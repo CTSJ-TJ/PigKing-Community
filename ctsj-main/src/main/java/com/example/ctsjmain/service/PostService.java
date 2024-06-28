@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PostService {
     List<Posts> findall();
+    Posts findId(String postid);
+    int addpost(Posts posts);
 }

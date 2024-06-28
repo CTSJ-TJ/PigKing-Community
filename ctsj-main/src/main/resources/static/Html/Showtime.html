@@ -12,7 +12,7 @@
       background-color: #f0f0f0;
     }
     .blog-view-container {
-      max-width: 800px;
+      max-width: 90%;
       margin: 0 auto;
       margin-top: 50px;
       padding: 20px;
@@ -37,6 +37,7 @@
 </div>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../editor.md/lib/marked.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
 <script>
   new Vue({
     el: '#app',
@@ -48,6 +49,22 @@
       htmlContent: function () {
         return marked(this.postContent);
       }
+    },
+    methods:{
+      findId(){
+        let data = localStorage.getItem('postid');
+        // alert("show:"+data);
+        // 请求：127.0.0.1:8888/post/findId?postid=5
+        axios.post("../post/findId?postid="+data).then(response=>{
+             console.log(response.data)
+          this.title=response.data.posttitle;
+          this.postContent=response.data.postpassege;
+        });
+
+      }
+    },
+    mounted(){
+      this.findId();
     }
   });
 </script>

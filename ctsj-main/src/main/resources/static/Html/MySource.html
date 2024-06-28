@@ -49,6 +49,33 @@
             font-size: 18px;
             color: #666;
         }
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input {
+            width: 200px;
+            height: 30px;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            height: 39px;
+            margin-left: 10px;
+            padding: 5px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <script src="../js/vue.js"></script>
@@ -58,6 +85,10 @@
 <body>
 <div id="app">
     <template>
+        <div class="centered">
+            <input type="text" v-model="searchText" @keyup.enter="showAlert" placeholder="请输入搜索内容..." />
+            <button @click="showAlert">搜索</button>
+        </div>
         <ul class="post-list" v-infinite-scroll="load" style="overflow:auto">
             <li v-for="i in count" class="post-item" @click="find(i)">
                 <div class="post-title">{{ title[i-1]}}</div>
@@ -74,27 +105,29 @@
             return {
                 count: 0,
                 title:[],
-                passege:[]
+                passege:[],
+                id:[],
+                searchText: ''
             }
         },
         methods: {
-            // load () {
-            //     if(this.count<10) {
-            //         this.count += 1
-            //     }
-            // },
             find(i){
-                alert("帖子:"+this.title[i-1])
-                document.location.href="Showtime.html"
+                let ids=this.id[i-1]
+                document.location.href="Showtime.html";
+                localStorage.setItem('postid', ids);
             },
             finaAll(){
                 axios.get("../post/findall").then(response=>{
                     for (let post of response.data) {
                        this.title.push(post.posttitle);
                         this.passege.push(post.postpassege);
+                        this.id.push(post.postid);
                     }
                     this.count=this.title.length;
                 });
+            },
+            showAlert() {
+                alert('你搜索的内容是: ' + this.searchText);
             }
         },
         mounted(){

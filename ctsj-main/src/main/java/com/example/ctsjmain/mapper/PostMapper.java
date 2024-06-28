@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PostMapper{
     List<Posts> findall();
-
+    Posts findId(String postid);
+    int addpost(Posts posts);
 }
 

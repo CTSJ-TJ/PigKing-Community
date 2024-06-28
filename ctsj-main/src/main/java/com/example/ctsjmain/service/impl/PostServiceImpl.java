@@ -19,4 +19,14 @@ public class PostServiceImpl implements PostService {
         return postMapper.findall();
     }
 
+    @Override
+    public Posts findId(String postid){
+        return postMapper.findId(postid);
+    }
+
+    @Override
+    public int addpost(Posts posts){
+        return postMapper.addpost(posts);
+    }
+
 }
