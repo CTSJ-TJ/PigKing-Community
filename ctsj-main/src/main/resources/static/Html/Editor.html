@@ -33,17 +33,15 @@
         path: "../editor.md/lib/"
     };
     var editor = editormd("editor", config);
-    
+
     function addpost(){
         var title = document.getElementById('title').value;
         var postContent = editor.getMarkdown(); // 获取 Markdown
         console.log('标题: ', title);
         console.log('内容: ', postContent);
-        axios.get("../post/addpost",{
-            params: {
-                posttitle: title,
-                postpassege: postContent
-            }
+        axios.post("../post/addpost",{
+            posttitle: title,
+            postpassege: postContent
         }).then(response=>{
             console.log("无语："+response.data);
             if (response.data>0) {

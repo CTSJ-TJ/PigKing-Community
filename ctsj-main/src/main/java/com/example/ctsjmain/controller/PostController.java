@@ -40,18 +40,13 @@ public class PostController{
         return postService.findId(postId);
     }
 
-    @RequestMapping("addpost")
+    @RequestMapping(value = "addpost", method = RequestMethod.POST)
     @ResponseBody
-    public int AddPost(@RequestParam("posttitle") String posttitle,@RequestParam("postpassege") String postpassege){
-        System.out.println("the add:"+posttitle+","+postpassege);
-        Posts posts=new Posts();
-        posts.setPosttile(posttitle);
-        posts.setPostpassege(postpassege);
+    public int AddPost(@RequestBody Posts posts){
+        System.out.println("the add:"+posts.getPosttitle()+","+posts.getPostpassege());
         System.out.println("who add:"+postService.addpost(posts));
         return postService.addpost(posts);
     }
-
-
     @RequestMapping("gateway")
     public String user(){
         return  restTemplate.getForObject(

@@ -5,20 +5,35 @@
     <title>CTSJ资源社区</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            /* 初始化 取消内外边距 */
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            /* 渐变背景 */
+            background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad, #f1c40f, #16a085, #c0392b, #9b59b6, #34495e, #f39c12);
+            /* 指定背景图像的大小 */
+            background-size: 1000%;
+            /* 执行动画：动画名 时长 线性的 无限次播放 */
+            animation: bgAnimation 25s ease-in-out infinite;
         }
         #app{
-            /*border: 2px red solid;*/
-            background-image: url("../image/dongtu01.gif");
-            /*background-size: cover;*/
+            text-align: center;
             max-width: 100%;
             margin: 0 auto;
             padding: 20px;
-            background-color: gainsboro;
+            background-color: transparent; /* 修改背景颜色为透明 */
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* 定义动画 */
+        @keyframes bgAnimation {
+            0%{
+                background-position: 0% 50%;
+            }
+            50%{
+                background-position: 100% 50%;
+            }
+            100%{
+                background-position: 0% 50%;
+            }
         }
         .post-list{
             list-style-type: none;
@@ -48,6 +63,22 @@
         .post-content {
             font-size: 18px;
             color: #666;
+            height: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .post-info{
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .post-info span {
+            margin: 15px;
         }
         .centered {
             display: flex;
@@ -93,6 +124,12 @@
             <li v-for="i in count" class="post-item" @click="find(i)">
                 <div class="post-title">{{ title[i-1]}}</div>
                 <div class="post-content">&nbsp;&nbsp;&nbsp;&nbsp;{{passege[i-1]}}</div>
+                <div class="post-info">
+                    <span>发布时间: {{time[i-1]}}</span>
+                    <span>点赞数: {{likes[i-1]}}</span>
+                    <span>收藏数: {{collections[i-1]}}</span>
+                    <span>作者: {{id[i-1]}}</span>
+                </div>
             </li>
         </ul>
     </template>
@@ -106,6 +143,10 @@
                 count: 0,
                 title:[],
                 passege:[],
+                name:[],
+                time:[],
+                likes:[],
+                collections:[],
                 id:[],
                 searchText: ''
             }
@@ -118,9 +159,14 @@
             },
             finaAll(){
                 axios.get("../post/findall").then(response=>{
+                    console.log("my:"+response.data)
                     for (let post of response.data) {
-                       this.title.push(post.posttitle);
+                        // alert(JSON.stringify(post))
+                        this.title.push(post.posttitle);
                         this.passege.push(post.postpassege);
+                        this.time.push(post.posttime);
+                        this.likes.push(post.postlikes);
+                        this.collections.push(post.collections);
                         this.id.push(post.postid);
                     }
                     this.count=this.title.length;

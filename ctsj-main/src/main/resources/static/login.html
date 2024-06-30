@@ -397,26 +397,38 @@
                     location.reload();
                   }else {
                       document.location.href='Html/Testmain.html';
+                      let username=response.data.data.username;
+                      // alert("who:"+userid+","+username);
+                      localStorage.setItem('username',username);
+                      // alert(JSON.stringify(response.data.data);
                   }
-                  console.log("white:"+response.data.data)
-                  console.log("white:" + JSON.stringify(response.data.data));
               });
 
           }else{
-            ajax("POST", "user", {aname: uname, apwd: upwd, usafe: usafe,op: 'admlogin'}, function(rs){
-              console.log(rs)
-              if (rs !=0) {
-                alert("登入成功!!!");
-                if(rs==1){
-                  window.location.href = 'html/manager.html'
-                }else{
-                  window.location.href = 'manager/main.html'
-                }
-              } else {
-                alert("登入失败!!!");
+            // ajax("POST", "user", {aname: uname, apwd: upwd, usafe: usafe,op: 'admlogin'}, function(rs){
+            //
+            // });
+            axios.get("admin/login",{
+              params:{
+                adminname: uname,
+                adminpwd: upwd,
+                usafe: usafe
+              }
+            }).then(response=>{
+              let codes=response.data.code
+              console.log("who:"+codes)
+              if(codes==66){
+                alert("验证码错误！！！")
                 location.reload();
+              }else {
+                alert(JSON.stringify(response.data.data));
+                let adminname=response.data.data.adminname;
+                // localStorage.setItem('username',username);
+                // alert(JSON.stringify(response.data.data);
+                document.location.href='manager/Welcome.html';
               }
             });
+
           }
 	  }
 

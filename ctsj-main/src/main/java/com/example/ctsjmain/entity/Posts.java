@@ -8,25 +8,10 @@ public class Posts {
     private String posttitle;
     private String postpassege;
     private Integer userid;
+    private String posttime;
     private Integer postlikes;
     private Integer collections;
     private Integer status;
-
-    public String getPosttitle() {
-        return posttitle;
-    }
-
-    public void setPosttitle(String posttitle) {
-        this.posttitle = posttitle;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Integer getPostid() {
         return postid;
@@ -36,12 +21,12 @@ public class Posts {
         this.postid = postid;
     }
 
-    public String getPosttile() {
+    public String getPosttitle() {
         return posttitle;
     }
 
-    public void setPosttile(String posttile) {
-        this.posttitle = posttile;
+    public void setPosttitle(String posttitle) {
+        this.posttitle = posttitle;
     }
 
     public String getPostpassege() {
@@ -60,6 +45,14 @@ public class Posts {
         this.userid = userid;
     }
 
+    public String getPosttime() {
+        return posttime;
+    }
+
+    public void setPosttime(String posttime) {
+        this.posttime = posttime;
+    }
+
     public Integer getPostlikes() {
         return postlikes;
     }
@@ -76,6 +69,14 @@ public class Posts {
         this.collections = collections;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Posts{" +
@@ -83,9 +84,18 @@ public class Posts {
                 ", posttitle='" + posttitle + '\'' +
                 ", postpassege='" + postpassege + '\'' +
                 ", userid=" + userid +
+                ", posttime='" + posttime + '\'' +
                 ", postlikes=" + postlikes +
                 ", collections=" + collections +
                 ", status=" + status +
                 '}';
+    }
+
+    public String getPosttile() {
+        return posttitle;
+    }
+
+    public void setPosttile(String posttitle) {
+        this.posttitle = posttitle;
     }
 }
