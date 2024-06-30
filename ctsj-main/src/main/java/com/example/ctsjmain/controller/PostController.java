@@ -27,8 +27,8 @@ public class PostController{
     @RequestMapping("findall")
     @ResponseBody
     public Object getUsers(){
-        System.out.println("执行！！");
-        System.out.println(postService.findall().toString());
+//        System.out.println("执行！！");
+//        System.out.println(postService.findall().toString());
         return postService.findall();
     }
 
@@ -44,9 +44,13 @@ public class PostController{
     @ResponseBody
     public int AddPost(@RequestBody Posts posts){
         System.out.println("the add:"+posts.getPosttitle()+","+posts.getPostpassege());
-        System.out.println("who add:"+postService.addpost(posts));
-        return postService.addpost(posts);
+//        System.out.println("who add:"+postService.addpost(posts));
+//        return postService.addpost(posts);
+        int result = postService.addpost(posts);
+        System.out.println("who add:"+ result);
+        return result;
     }
+
     @RequestMapping("gateway")
     public String user(){
         return  restTemplate.getForObject(

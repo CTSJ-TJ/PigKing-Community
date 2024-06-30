@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>在线聊天</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        .friend-list {
+            width: 30%;
+            height: 500px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .chat-content {
+            width: 70%;
+            height: 500px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-left: 20px;
+        }
+        .friend-list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        .friend-list li {
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+            font-size: 18px;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+        .friend-list li:last-child {
+            border-bottom: none;
+        }
+        .friend-list li:hover {
+            background-color: #e9ecef;
+        }
+        .message {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: red 2px solid;
+            width: 500px;
+        }
+        .message-sender-1 {
+            float:  left;
+            background-color: #f8f9fa;
+        }
+        .message-sender-2 {
+            float:  right;
+            background-color: #e9ecef;
+        }
+        .label {
+            width: 95%;
+            /*border: red 2px solid;*/
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 30px;
+            font-family: 微软雅黑;
+        }
+        #mytitle{
+            /*border: red 2px solid;*/
+            /*height: 50px;*/
+            margin-bottom: 10px;
+            height: 75px;
+        }
+        #left{
+            margin-top: 10px;
+            width: 30%;
+            float: left;
+            display: inline-block;
+            border: 2px #ccc solid;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+        }
+        #right{
+            margin-top: 10px;
+            width: 68%;
+            float: right;
+            display: inline-block;
+            border: 2px #ccc solid;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <div id="mytitle">
+        <div id="left">
+            <div class="label">好友列表</div>
+        </div>
+        <div id="right">
+            <div class="label">社区聊天室</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="friend-list">
+            <ul>
+                <li v-for="friend in friends" :key="friend.id" @click="handleclick(friend.id)">
+                    {{ friend.friendname }}
+                </li>
+            </ul>
+        </div>
+        <div class="chat-content">
+            <div v-for="message in messages" :key="message.id" class="message" :class="{'message-sender-1': message.id === myid, 'message-sender-2': message.id === otherid}">
+                <h5>{{ message.sender }}</h5>
+                <p>{{ message.content }}</p>
+                <small>{{ message.time }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                friends: [
+                    // { id: 1, name: '好友1' },
+                    // { id: 2, name: '好友2' },
+                    // { id: 3, name: '好友2' },
+                    // // 更多好友...
+                ],
+                messages: [
+                    { id: 1, sender: '好友1', time: '10:00', content: '你好呀!伟哥' },
+                    { id: 2, sender: '我', time: '10:01', content: '哦，朱王你也好呀' },
+                    { id: 1, sender: '好友', time: '10:00', content: '你现在在干什么！' },
+                    { id: 2, sender: '我', time: '10:01', content: '我在砖厂上班' },
+                    // 更多消息...
+                ],
+                myid:1,
+                otherid:2
+            }
+        },
+        methods:{
+            handleclick(id) {
+                alert('My friend ID:'+id);
+                // 在这里你可以根据需要处理ID
+            },
+            findfriend(){
+                axios.get("../user/findfriend",{
+                    params: {myid: 1002}
+                }).then(response=>{
+                    mydata=response.data;
+
+                    let myId = 1002;
+                    let result = mydata.map(item => {
+                        if (item.friendxid === myId) {
+                            return { friendid: item.friendyid, friendname: item.friendyname };
+                        } else if (item.friendyid === myId) {
+                            return { friendid: item.friendxid, friendname: item.friendxname };
+                        }
+                    }).filter(item => item !== undefined);
+                    console.log("hwo:"+(JSON.stringify(result)));
+                    this.friends=result;
+
+                });
+            }
+        },
+        mounted(){
+            this.findfriend();
+        }
+
+    })
+</script>
+</body>
+</html>

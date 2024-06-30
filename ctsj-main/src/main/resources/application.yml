@@ -17,7 +17,9 @@ eureka:
 
 # 映射文件位置
 mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
+  mapper-locations:
+        - classpath:mapper/*Mapper.xml
+        - classpath:mybatis-config.xml
   configuration:
     map-underscore-to-camel-case: true #驼峰
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -25,3 +27,9 @@ mybatis:
 logging:
   level:
     org.mybatis: DEBUG
+
+
+
+
+
+

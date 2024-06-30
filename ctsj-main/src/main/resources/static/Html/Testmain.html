@@ -59,12 +59,12 @@
 							<template slot="title"><i class="el-icon-goods"></i>创作管理</template>
 								<el-menu-item index="2-1" @click="changePages(2)">创建帖子</el-menu-item>
 								<el-menu-item index="2-2" @click="changePages(3)">我的帖子</el-menu-item>
-								<el-menu-item index="2-3" @click="changePages(4)">C/C++学习</el-menu-item>
+								<el-menu-item index="2-3" @click="changePages(4)">报表统计</el-menu-item>
 							</el-submenu>
 							<el-submenu index="3">
-							<template slot="title"><i class="el-icon-document-copy"></i>消息</template>
-								<el-menu-item index="3-1" @click="changePages(5)">面试必答</el-menu-item>
-								<el-menu-item index="3-2" @click="changePages(6)">强化训练</el-menu-item>
+							<template slot="title"><i class="el-icon-document-copy"></i>社区交流</template>
+								<el-menu-item index="3-1" @click="changePages(5)">消息</el-menu-item>
+								<el-menu-item index="3-2" @click="changePages(6)">我的好友</el-menu-item>
 							</el-submenu>
 							<el-submenu index="4">
 								<template slot="title"><i class="el-icon-document-copy"></i>社区AI</template>
@@ -103,7 +103,7 @@
 						} else if(i == 4){
 							this.mainsrc = "Study04.html"
 						} else if(i == 5){
-							this.mainsrc = "Study05.html"
+							this.mainsrc = "Message.html"
 						} else if(i == 6){
 							this.mainsrc = "Study06.html"
 						} else if(i == 7){

@@ -1,13 +1,13 @@
 package com.example.ctsjmain.controller;
 
+import com.example.ctsjmain.entity.Friends;
+import com.example.ctsjmain.entity.Posts;
 import com.example.ctsjmain.entity.User;
 import com.example.ctsjmain.service.PostService;
 import com.example.ctsjmain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,5 +46,12 @@ public class UserController {
             map.put("data",user1);
             return map;
         }
+    }
+
+    @RequestMapping("findfriend")
+    @ResponseBody
+    public Object FrindFriend(@RequestParam("myid") String myId){
+        System.out.println("myid="+myId);
+         return userService.findfriend(myId);
     }
 }

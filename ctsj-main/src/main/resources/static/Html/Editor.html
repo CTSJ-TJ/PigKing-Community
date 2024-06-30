@@ -5,19 +5,61 @@
     <title>写帖子</title>
     <link rel="stylesheet" href="../css/navigation bar.css">
     <link rel="stylesheet" href="../css/editor.css">
+    <style>
+        body {
+            background-image: url('../image/Aicreate01.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+        }
+        #myadd{
+            border:#ffff 0.01px solid;
+            background-image: url("../image/Aicreate01.jpg");
+            background-size: contain;
+            /*background-repeat: no-repeat;*/
+            /*position: absolute;*/
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .title {
+            height: 60px;
+            font-family: Arial, sans-serif;
+        }
+        #title{
+            width: 90%;
+            height: 40px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 3px solid #0096c7;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        #submit{
+            height: 40px;
+            font-size: 18px;
+        }
+
+    </style>
 </head>
 <body>
-<div class="blog-edit-container">
-    <div class="title">
-        <input type="text" placeholder="在这里写下主贴标题" id="title">
-        <button id="submit" onclick="addpost()">发布帖子</button>
+<div id="myadd">
+    <div class="blog-edit-container">
+        <div class="title">
+            <input type="text" placeholder="在这里写下主贴标题" id="title">
+            <button id="submit" onclick="addpost()">发布帖子</button>
+        </div>
+        <div id="editor" class="编辑器"></div>
+        <link rel="stylesheet" href="../editor.md/css/editormd.min.css" />
+        <script src="../js/jquery-3.4.1.min.js"></script>
+        <script src="../editor.md/lib/marked.min.js"></script>
+        <script src="../editor.md/lib/prettify.min.js"></script>
+        <script src="../editor.md/editormd.js"></script>
     </div>
-    <div id="editor" class="编辑器"></div>
-    <link rel="stylesheet" href="../editor.md/css/editormd.min.css" />
-    <script src="../js/jquery-3.4.1.min.js"></script>
-    <script src="../editor.md/lib/marked.min.js"></script>
-    <script src="../editor.md/lib/prettify.min.js"></script>
-    <script src="../editor.md/editormd.js"></script>
 </div>
 <script src="../js/axios-0.18.0.js"></script>
 <script>
@@ -33,7 +75,6 @@
         path: "../editor.md/lib/"
     };
     var editor = editormd("editor", config);
-
     function addpost(){
         var title = document.getElementById('title').value;
         var postContent = editor.getMarkdown(); // 获取 Markdown
