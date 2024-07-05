@@ -90,7 +90,8 @@
 				el: '#app',
 				data:{
 					mainsrc:'Welcome.html',
-					username:'游客'
+					username:'游客',
+					userid:0
 				},
 				methods: {
 					changePages:function(i){
@@ -103,7 +104,7 @@
 						} else if(i == 4){
 							this.mainsrc = "Study04.html"
 						} else if(i == 5){
-							this.mainsrc = "Message.html"
+							this.mainsrc = "Message.html";
 						} else if(i == 6){
 							this.mainsrc = "Study06.html"
 						} else if(i == 7){
@@ -123,20 +124,21 @@
 					},
 					exits:function (){
 						document.location.href="../login.html";
-						localStorage.clear();
 					},
-					myinit:function (){
-						let name = localStorage.getItem('username');
-						document.getElementById('myButton1').style.display = 'none';
-						if(name!=null){
-							this.username=name;
-							document.getElementById('myButton').style.display = 'none';
-							document.getElementById('myButton1').style.display = 'inline-block';
-						}
-					}
 				},
 				mounted(){
-                    this.myinit();
+					axios.get("../user/getuser").then(result=>{
+						// alert(JSON.stringify(result.data));
+						this.username=result.data.myname;
+						this.userid=result.data.myid;
+						if(this.username!=null && this.userid !=null){
+							document.getElementById('myButton').style.display = 'none';
+							document.getElementById('myButton1').style.display = 'inline-block';
+						}else {
+							this.username="游客";
+							document.getElementById('myButton1').style.display = 'none';
+						}
+					});
 				}
 			});
 		</script>

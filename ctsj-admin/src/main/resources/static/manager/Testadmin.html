@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title> 管理员个人信息</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    #test{
+      border: 2px solid black;
+      text-align: center;
+    }
+    #test2{
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div id="test">
+    <h2>修改密码</h2>
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="密码" prop="pass">
+        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="管理员编号" prop="age">
+        <el-input v-model.number="ruleForm.age"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+  <br>
+  <div id="test2">
+      <el-table :data="tableData" borderstyle="width: 100%">
+        <el-table-column
+                prop="ad_id"
+                label="管理员编号"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="ad_name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="ad_pwd"
+                label="密码">
+        </el-table-column>
+        <el-table-column
+                prop="ad_type"
+                label="类型">
+        </el-table-column>
+        <el-table-column
+                prop="ad_status"
+                label="状态">
+        </el-table-column>
+      </el-table>
+  </div>
+
+</div>
+
+</body>
+  <script src="../js/vue.js"></script>
+  <script src="../element-ui/lib/index.js"></script>
+  <script src="../js/axios-0.18.0.js"></script>
+  <script>
+
+	var Main = {
+	    data() {
+          var checkAge = (rule, value, callback) => {
+            if (!value) {
+              return callback(new Error('编号不能为空'));
+            }
+            setTimeout(() => {
+              if (!Number.isInteger(value)) {
+                callback(new Error('请输入数字值'));
+              } else {
+                if (value > 3000 || value< 2000) {
+                  callback(new Error('请输入正确的编号'));
+                } else {
+                  callback();
+                }
+              }
+            }, 1000);
+          };
+	      var validatePass = (rule, value, callback) => {
+	        if (value === '') {
+	          callback(new Error('请输入密码'));
+	        } else {
+	          if (this.ruleForm.checkPass !== '') {
+	            this.$refs.ruleForm.validateField('checkPass');
+	          }
+	          callback();
+	        }
+	      };
+	      var validatePass2 = (rule, value, callback) => {
+	        if (value === '') {
+	          callback(new Error('请再次输入密码'));
+	        } else if (value !== this.ruleForm.pass) {
+	          callback(new Error('两次输入密码不一致!'));
+	        } else {
+	          callback();
+	        }
+	      };
+	      return {
+	        ruleForm: {
+	          pass: '',
+	          checkPass: '',
+	          age: ''
+	        },
+	        rules: {
+	          pass: [
+	            { validator: validatePass, trigger: 'blur' }
+	          ],
+	          checkPass: [
+	            { validator: validatePass2, trigger: 'blur' }
+	          ],
+	          age: [
+	            { validator: checkAge, trigger: 'blur' }
+	          ]
+	        },
+            tableData: [{
+              ad_id: '2001',
+              ad_name: '朱王',
+              ad_pwd: '123456',
+              ad_type: '普通管理员',
+              ad_status: '任职期'
+            }]
+	      };
+	    },
+      created(){
+        this.admfind();
+      },
+	    methods: {
+	      submitForm(formName) {
+	        this.$refs[formName].validate((valid) => {
+	          if (valid) {
+	            alert('submit!');
+				alert(this.ruleForm.pass);
+                alert(this.ruleForm.age);
+                var pass=this.ruleForm.pass;
+                var admid=this.ruleForm.age;
+                axios.get('../user',{params:{op:"admodify",pass: pass,admid: admid}}).then(response => {
+                  alert("修改成功！！！");
+                   this.tableData = response.data;
+                   alert(this.tableData);
+                   this.admfind();
+                })
+	          } else {
+	            console.log('error submit!!');
+	            return false;
+	          }
+	        });
+	      },
+	      resetForm(formName) {
+	        this.$refs[formName].resetFields();
+	      },
+          admfind(){
+            alert("查看信息");
+            // axios.get('user',{params:{op:"admfind"}}).then(response => {
+            //   alert("修改成功！！！");
+            // })
+          }
+	    }
+	  }
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app')
+  </script>
+</html>

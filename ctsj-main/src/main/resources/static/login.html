@@ -380,9 +380,6 @@
           let usafe = $(".login input[name='ucheck']").val();
           console.log(logvue.value)
           if(logvue.value == "切换管理员登录"){
-              // ajax("POST", "user/login", {uname: uname, upwd: upwd, usafe: usafe}, function (rs) {
-              //   console.log("学习："+rs.data);
-              // });
               axios.get("user/login",{
                 params:{
                   username: uname,
@@ -396,18 +393,24 @@
                     alert("验证码错误！！！")
                     location.reload();
                   }else {
-                      document.location.href='Html/Testmain.html';
                       let username=response.data.data.username;
-                      // alert("who:"+userid+","+username);
-                      localStorage.setItem('username',username);
-                      // alert(JSON.stringify(response.data.data);
+                      let userid=response.data.data.userid;
+                      axios.get("../user/setuser",{
+                        params:{myname:username,myid: userid}
+                      }).then(result=>{
+                           // alert(JSON.stringify(result.data));
+                           let code=result.data;
+                           if(code==1){
+                             document.location.href='Html/Testmain.html';
+                           }else{
+                             alert("登录失败！！！");
+                             location.reload();
+                           }
+                      });
                   }
               });
 
           }else{
-            // ajax("POST", "user", {aname: uname, apwd: upwd, usafe: usafe,op: 'admlogin'}, function(rs){
-            //
-            // });
             axios.get("admin/login",{
               params:{
                 adminname: uname,
@@ -453,11 +456,9 @@
           location.reload();
         }
 	  }
-	  
 	  function changepics(){
           $(".pic").attr("src","image?"+Math.random());
 	  }
-
   </script>
 </body>
 </html>

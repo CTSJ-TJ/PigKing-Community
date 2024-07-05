@@ -6,6 +6,8 @@
     <style>
         .container {
             display: flex;
+            border: 2px solid lightblue;
+            box-shadow: 0px 0px 10px rgba(70,130,180,0.5);
         }
         .friend-list {
             width: 30%;
@@ -98,9 +100,41 @@
             border: 2px #ccc solid;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
         }
+        #send{
+            margin-top: 5px;
+            border: 2px solid white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .browBox {
+            width: 100%;
+            height: 200px;
+            background: #e6e6e6;
+            position: absolute;
+            z-index: 100;
+            bottom: 0px;
+            overflow: scroll;
+        }
+        .browBox ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+        .browBox ul li {
+            cursor: pointer;
+            width: 10%;
+            font-size: 26px;
+            list-style: none;
+            text-align: center;
+        }
+        .submit-btn {
+            margin: 0 15px 10px 0;
+            float: right;
+        }
     </style>
     <script src="../js/vue.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <script src="../element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
 </head>
 <body>
 <div id="app">
@@ -115,18 +149,56 @@
     <div class="container">
         <div class="friend-list">
             <ul>
-                <li v-for="friend in friends" :key="friend.id" @click="handleclick(friend.id)">
+                <li v-for="friend in friends" :key="friend.friendid" @click="handleclick(friend.friendid)">
                     {{ friend.friendname }}
                 </li>
             </ul>
         </div>
         <div class="chat-content">
-            <div v-for="message in messages" :key="message.id" class="message" :class="{'message-sender-1': message.id === myid, 'message-sender-2': message.id === otherid}">
-                <h5>{{ message.sender }}</h5>
+            <div v-for="message in messages" :key="message.msgid" class="message" :class="{'message-sender-1': message.senderid == otherid, 'message-sender-2': message.senderid == myid}">
+                <h5>{{ message.sendername }}</h5>
                 <p>{{ message.content }}</p>
-                <small>{{ message.time }}</small>
+                <small>{{ message.createtime }}</small>
             </div>
         </div>
+    </div>
+    <div id="send">
+        <el-popover
+                placement="bottom"
+                title="标题"
+                width="500"
+                height="700"
+                trigger="click"
+                v-model="emojiShow"
+        >
+            <el-button slot="reference">😀</el-button>
+            <div class="browBox">
+                <ul>
+                    <li
+                            v-for="(item, index) in faceList"
+                            :key="index"
+                            @click="getBrow(index)"
+                    >
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+        </el-popover>
+        <el-button
+                class="submit-btn"
+                type="primary"
+                @click="submitMessage"
+                :disabled="content == ''"
+        >发送
+        </el-button>
+        <el-input
+                :rows="5"
+                type="textarea"
+                placeholder="请输入内容"
+                @keyup.enter.native="submitMessage"
+                v-model="content"
+        >
+        </el-input>
     </div>
 </div>
 <script>
@@ -134,52 +206,92 @@
         el: '#app',
         data() {
             return {
-                friends: [
-                    // { id: 1, name: '好友1' },
-                    // { id: 2, name: '好友2' },
-                    // { id: 3, name: '好友2' },
-                    // // 更多好友...
-                ],
-                messages: [
-                    { id: 1, sender: '好友1', time: '10:00', content: '你好呀!伟哥' },
-                    { id: 2, sender: '我', time: '10:01', content: '哦，朱王你也好呀' },
-                    { id: 1, sender: '好友', time: '10:00', content: '你现在在干什么！' },
-                    { id: 2, sender: '我', time: '10:01', content: '我在砖厂上班' },
-                    // 更多消息...
-                ],
-                myid:1,
-                otherid:2
+                friends: [],
+                messages: [],
+                myid: 0,
+                myname: "猪王",
+                otherid: 0,
+                //聊天输入内容
+                content: "",
+                //表情框是否展示
+                emojiShow: false,
+                //表情列表
+                faceList: [],
+                //表情文本
+                getBrowString: "",
             }
+        },
+        created() {
         },
         methods:{
             handleclick(id) {
-                alert('My friend ID:'+id);
-                // 在这里你可以根据需要处理ID
+                this.otherid=id;
+                axios.get("../message/chat",{
+                    params: {myid: this.myid,otherid:id}
+                }).then(response=>{
+                    console.log("msg:"+response.data);
+                    this.messages=response.data;
+                });
             },
             findfriend(){
                 axios.get("../user/findfriend",{
-                    params: {myid: 1002}
+                    params: {myid: this.myid}
                 }).then(response=>{
                     mydata=response.data;
-
-                    let myId = 1002;
+                    //数据前端处理
+                    let myId = this.myid;
                     let result = mydata.map(item => {
-                        if (item.friendxid === myId) {
+                        if (item.friendxid == myId) {
                             return { friendid: item.friendyid, friendname: item.friendyname };
-                        } else if (item.friendyid === myId) {
+                        } else if (item.friendyid == myId) {
                             return { friendid: item.friendxid, friendname: item.friendxname };
                         }
                     }).filter(item => item !== undefined);
                     console.log("hwo:"+(JSON.stringify(result)));
                     this.friends=result;
-
                 });
+            },
+            //加载表情，存放到表情列表中
+            loadEmojis() {
+                fetch('../json/emojis.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.faceList = Object.values(data).map(item => item.char);
+                    })
+                    .catch(error => console.error('Error:', error));
+            },
+            // 获取用户点击之后的标签 ，存放到输入框内
+            getBrow(index) {
+                for (let i in this.faceList) {
+                    if (index == i) {
+                        this.getBrowString = this.faceList[index];
+                        this.content += this.getBrowString;
+                    }
+                }
+                this.emojiShow = false;
+            },
+            submitMessage(){
+                // alert(this.content)
+                axios.get("../message/addchat",{
+                    params: {content:this.content,senderid: this.myid,
+                        sendername: this.myname,receiverid:this.otherid}
+                }).then(response=>{
+                    console.log("msg:"+response.data);
+                    this.handleclick(this.otherid);
+                    this.content="";
+                });
+
             }
         },
         mounted(){
-            this.findfriend();
+            this.loadEmojis();
+            axios.get("../user/getuser").then(result=>{
+                // alert(JSON.stringify(result.data));
+                this.myname=result.data.myname;
+                this.myid=result.data.myid;
+                this.findfriend();
+            });
         }
-
     })
 </script>
 </body>

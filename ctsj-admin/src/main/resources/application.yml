@@ -1,0 +1,6 @@
+spring:
+  application:
+     name: ctsj-admin
+
+server:
+  port: 10006

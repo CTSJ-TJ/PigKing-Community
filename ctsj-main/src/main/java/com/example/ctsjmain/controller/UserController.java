@@ -54,4 +54,29 @@ public class UserController {
         System.out.println("myid="+myId);
          return userService.findfriend(myId);
     }
+
+    @RequestMapping("setuser")
+    @ResponseBody
+    public int Setuser(@RequestParam("myname") String myname,@RequestParam("myid") String myid,HttpSession session){
+        if(myname!=null&&myid!=null){
+            System.out.println("Set:"+myname+", "+myid);
+            session.setAttribute("myname", myname);
+            session.setAttribute("myid",myid);
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
+    @RequestMapping("/getuser")
+    @ResponseBody
+    public Map getSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String myname = (String) session.getAttribute("myname");
+        String myid = (String) session.getAttribute("myid");
+        Map<String,Object> map=new HashMap<>();
+        map.put("myname",myname);
+        map.put("myid",myid);
+        return map;
+    }
 }

@@ -28,6 +28,13 @@ logging:
   level:
     org.mybatis: DEBUG
 
+---
+server:
+  port: 9009
+spring:
+  profiles: user1
+
+
 
 
 

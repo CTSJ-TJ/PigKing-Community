@@ -5,7 +5,36 @@
     <title>24°超市会员</title>
     <!--这里引入页面的样式-->
     <style>
-
+        #app{
+            margin-top: 100px;
+            border: 2px solid white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .browBox {
+            width: 100%;
+            height: 200px;
+            background: #e6e6e6;
+            position: absolute;
+            z-index: 100;
+            bottom: 0px;
+            overflow: scroll;
+        }
+        .browBox ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+        .browBox ul li {
+            cursor: pointer;
+            width: 10%;
+            font-size: 26px;
+            list-style: none;
+            text-align: center;
+        }
+        .submit-btn {
+            margin: 0 15px 10px 0;
+            float: right;
+        }
     </style>
 </head>
 <!--引入相关的文件-->
@@ -15,38 +44,87 @@
 <script src="../js/axios-0.18.0.js"></script>
 <body>
 <div id="app">
-    <h1>欢迎你来看：伟哥社区影院！！</h1>
+    <el-popover
+            placement="bottom"
+            title="标题"
+            width="500"
+            height="700"
+            trigger="click"
+            v-model="emojiShow"
+    >
+        <el-button slot="reference">😀</el-button>
+        <div class="browBox">
+            <ul>
+                <li
+                        v-for="(item, index) in faceList"
+                        :key="index"
+                        @click="getBrow(index)"
+                >
+                    {{ item }}
+                </li>
+            </ul>
+        </div>
+    </el-popover>
+    <el-button
+            class="submit-btn"
+            type="primary"
+            @click="submitMessage"
+            :disabled="content == ''"
+    >发送
+    </el-button>
+    <el-input
+            :rows="5"
+            type="textarea"
+            placeholder="请输入内容"
+            @keyup.enter.native="submitMessage"
+            v-model="content"
+    >
+    </el-input>
 
 </div>
-
-
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const uname=urlParams.get('userName');
-    // 创建一个vue的实例对象,里面写那些数据和方法(一个是页面加载完后自动执行的方法，一个是其他操作后执行的代码)
-    // 创建 Vue 实例
     new Vue({
         el: '#app',
         data() {
             return {
-                value: new Date(),
-                a:{}
+                //聊天输入内容
+                content: "",
+                //表情框是否展示
+                emojiShow: false,
+                //表情列表
+                faceList: [],
+                //表情文本
+                getBrowString: "",
             }
+        },
+        created() {
+            this.loadEmojis();
         },
         methods: {
-            goBack() {
-                console.log('go back');
-                history.go(-1); // 返回上一个页面
+            //加载表情，存放到表情列表中
+            loadEmojis() {
+                fetch('../json/emojis.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.faceList = Object.values(data).map(item => item.char);
+                    })
+                    .catch(error => console.error('Error:', error));
             },
-            showMemberInfo(){
-                axios.get("../users?op=showMemberInfo&userName="+uname).then(response=>{
-                    //console.log(response.data.data[0].userId+"++++++++++++++++++++++");
-                   this.a= response.data.data[0]
-                })
+            // 获取用户点击之后的标签 ，存放到输入框内
+            getBrow(index) {
+                for (let i in this.faceList) {
+                    if (index == i) {
+                        this.getBrowString = this.faceList[index];
+                        this.content += this.getBrowString;
+                    }
+                }
+                this.emojiShow = false;
+            },
+            submitMessage(){
+                alert(this.content);
+                console.log(this.content);
+
             }
-        },
-        mounted(){
-            this.showMemberInfo();
         }
     });
 </script>
