@@ -28,11 +28,31 @@ logging:
   level:
     org.mybatis: DEBUG
 
+
+login:
+  enable: true
+  user-table: tp_user
+  name-column: uname
+  pwd-column: pwd
+  email-column: email
+  # 实体类类名
+  entity-class: com.yc.myvote.entity.User
+  # 访问权限控制资源列表
+  auth-urls:
+    - /myinfo.html
+    - /add.html
+    - /vote.html
+    - /view.html
+    # 修改密码
+    - /modifyPwd
+
 ---
 server:
   port: 9009
 spring:
   profiles: user1
+
+
 
 
 

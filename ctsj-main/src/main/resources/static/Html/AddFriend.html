@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模拟QQ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .app {
+            display: flex;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* 增大app框的宽度 */
+        }
+        .friend-list {
+            margin-right: 20px;
+            flex: 1;
+            border-right: 1px solid #ddd;
+            padding-right: 20px;
+            height: 400px;
+            overflow-y: auto;
+        }
+        .friend-list li {
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            list-style-type: none;
+            border: 1px solid #ddd; /* 添加边框 */
+            transition: all 0.3s ease; /* 添加过渡效果 */
+        }
+        .friend-list li:hover {
+            background-color: #e6e6e6; /* 鼠标悬停时改变背景颜色 */
+        }
+        .add-friend-form {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .add-friend-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .add-friend-form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .search-results li {
+            padding: 10px;
+            border: 1px solid #ddd; /* 添加边框 */
+            border-radius: 5px; /* 添加圆角 */
+            list-style-type: none; /* 移除列表标记 */
+            transition: all 0.3s ease; /* 添加过渡效果 */
+            margin-bottom: 10px; /* 添加底部外边距 */
+        }
+        .search-results li:hover {
+            background-color: #e6e6e6; /* 鼠标悬停时改变背景颜色 */
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="friend-list">
+        <h2>好友列表</h2>
+        <ul>
+            <li>好友1</li>
+            <li>好友2</li>
+            <li>好友3</li>
+        </ul>
+    </div>
+    <div class="add-friend-form">
+        <h2>添加好友</h2>
+        <input type="text" placeholder="输入好友的用户名">
+        <button>添加</button>
+        <ul id="results" class="search-results">
+            <!-- 搜索结果将会在这里显示 -->
+        </ul>
+    </div>
+</div>
+<script>
+    // 假设你有一个函数来执行搜索，它返回一个Promise
+    function search(query) {
+        // 这里是一个示例，你需要替换成你自己的搜索函数
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(['结果1', '结果2', '结果3']);
+            }, 1000);
+        });
+    }
+
+    // 当用户点击"添加"按钮时，执行搜索并更新结果列表
+    document.querySelector('.add-friend-form button').addEventListener('click', () => {
+        const query = document.querySelector('.add-friend-form input').value;
+        search(query).then(results => {
+            const resultsElement = document.querySelector('#results');
+            resultsElement.innerHTML = '';
+            results.forEach(result => {
+                const li = document.createElement('li');
+                li.textContent = result;
+                resultsElement.appendChild(li);
+            });
+        });
+    });
+</script>
+</body>
+</html>
