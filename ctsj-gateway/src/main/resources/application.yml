@@ -1,7 +1,6 @@
 #spring:
 #  application:
 #   name: ctsj-gateway
-
 eureka:
   client:
     serviceUrl:
@@ -18,23 +17,17 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: wghello
-          uri: https://www.hnit.edu.cn
+        - id: route1
+          uri: http://127.0.0.1:10006
           predicates:
-            - Path=/test/{segment}
-          filters:
-            #            - RewritePath=/test/(?<segment>.*), /demo/$\{segment}
-            - SetPath=/demo/{segment}
+            - Path=/yyds/**
 
-        - id: test
-          uri: https://www.baidu.com
+        - id: route2
+          uri: http://127.0.0.1:10006
           predicates:
-            - Path=/way/**
-          filters:
-            - RewritePath=/way/(?<segment>.*), /$\{segment}
+            - Path=/admin/**
 
         - id: default
           uri: https://www.hnit.edu.cn
           predicates:
             - Path=/**
-

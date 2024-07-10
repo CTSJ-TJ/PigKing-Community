@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping("login")
     @ResponseBody
-    public Map show(HttpServletRequest req,
+    public Map login(HttpServletRequest req,
                      @RequestParam("username") String uname,
                      @RequestParam("userpwd") String upwd,
                      @RequestParam("usafe") String usafe
@@ -47,6 +47,8 @@ public class UserController {
             return map;
         }
     }
+
+
 
     @RequestMapping("findfriend")
     @ResponseBody

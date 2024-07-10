@@ -1,19 +1,25 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:11010/eureka/
+
+server:
+  port: 8888
+
 spring:
   application:
-  name: ctsj-main
+    name: ctsj-main
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql:///my_community
     username: root
     password: 123456
-
-server:
-  port: 8888
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:11010/eureka/
+  session:
+    store-type: redis
+    redis:
+      host: localhost
+      port: 6379
+      password:
 
 # 映射文件位置
 mybatis:
@@ -29,22 +35,6 @@ logging:
     org.mybatis: DEBUG
 
 
-login:
-  enable: true
-  user-table: tp_user
-  name-column: uname
-  pwd-column: pwd
-  email-column: email
-  # 实体类类名
-  entity-class: com.yc.myvote.entity.User
-  # 访问权限控制资源列表
-  auth-urls:
-    - /myinfo.html
-    - /add.html
-    - /vote.html
-    - /view.html
-    # 修改密码
-    - /modifyPwd
 
 ---
 server:

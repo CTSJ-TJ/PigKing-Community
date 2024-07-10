@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.example.ctsjlogin.CtsjLoginApplication.java
+com.example.ctsjlogin.CtsjLoginApplication

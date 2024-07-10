@@ -225,7 +225,6 @@
         },
         methods:{
             handleclick(id) {
-                alert("this is :"+id)
                 this.otherid=id;
                 axios.get("../message/chat",{
                     params: {myid: this.myid,otherid:id}

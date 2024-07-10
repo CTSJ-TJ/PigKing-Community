@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>layout 管理系统大布局 - Layui</title>
+  <title>CTSJ社区管理平台</title>
   <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 
@@ -65,7 +65,7 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <iframe src="welcome.html" frameborder="0" id="demoAdmin" style="width: 100%;height: 100%;"></iframe>
+    <iframe src="../manager/Welcome.html" frameborder="0" id="demoAdmin" style="width: 100%;height: 100%;"></iframe>
   </div>
   
   <div class="layui-footer">
@@ -74,14 +74,20 @@
   </div>
 </div>
 <script src="../layui/layui.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
 <script>
-//JS
 layui.use(['element', 'layer', 'util'], function(){
   var element = layui.element
   ,layer = layui.layer
   ,util = layui.util
   ,$ = layui.$;
 
+  function myinit() {
+     axios.get("../getadmin").then(result=>{
+          alert(JSON.stringify(result.data));
+     });
+  }
+  myinit();
   //头部事件
   util.event('lay-header-event', {
     //左侧菜单事件
@@ -103,7 +109,7 @@ layui.use(['element', 'layer', 'util'], function(){
 });
 
 function changePage(page){
-	document.getElementById("demoAdmin").src=page+".html";
+	document.getElementById("demoAdmin").src="../manager/"+page+".html";
 }
 </script>
 </body>

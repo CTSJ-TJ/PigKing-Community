@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+
 @EnableFeignClients
 @SpringBootApplication
 @MapperScan("com.example.ctsjmain.mapper")//添加组件？

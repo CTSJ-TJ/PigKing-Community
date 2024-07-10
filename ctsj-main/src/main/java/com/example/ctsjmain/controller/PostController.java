@@ -27,8 +27,6 @@ public class PostController{
     @RequestMapping("findall")
     @ResponseBody
     public Object getUsers(){
-//        System.out.println("执行！！");
-//        System.out.println(postService.findall().toString());
         return postService.findall();
     }
 

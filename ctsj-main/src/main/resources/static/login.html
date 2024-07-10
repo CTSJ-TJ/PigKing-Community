@@ -421,17 +421,27 @@
               let codes=response.data.code
               console.log("who:"+codes)
               if(codes==66){
-                alert("验证码错误！！！")
+                alert("验证码错误！！！");
+                location.reload();
+              }else if(codes==77){
+                alert("账号或密码错误！！！");
                 location.reload();
               }else {
-                alert(JSON.stringify(response.data.data));
-                let adminname=response.data.data.adminname;
-                // localStorage.setItem('username',username);
-                // alert(JSON.stringify(response.data.data);
-                document.location.href='manager/Welcome.html';
+                // // alert(JSON.stringify(response.data.data));
+                // let adminname=response.data.data.adminname;
+                // localStorage.setItem('adminname',adminname);
+                // document.location.href='manager/main.html';
+                let name=response.data.data.adminname;
+                let id=response.data.data.adminid;
+                // alert(id+","+name)
+                // localStorage.setItem('adminname',name);
+                // localStorage.setItem("adminid",id);
+                axios.get("../admin/toadmin",{params:{adminid: id ,adminname: name}}).then(response => {
+                  alert(JSON.stringify(response.data));
+                       window.location.href=response.data
+                });
               }
             });
-
           }
 	  }
 
