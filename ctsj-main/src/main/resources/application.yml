@@ -9,6 +9,8 @@ server:
 spring:
   application:
     name: ctsj-main
+  main:
+    web-application-type: reactive
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql:///my_community
@@ -20,6 +22,7 @@ spring:
       host: localhost
       port: 6379
       password:
+
 
 # 映射文件位置
 mybatis:

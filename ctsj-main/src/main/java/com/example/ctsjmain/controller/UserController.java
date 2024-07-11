@@ -17,10 +17,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("user")
 public class UserController {
-
     @Autowired
     UserService userService;
-
     @RequestMapping("login")
     @ResponseBody
     public Map login(HttpServletRequest req,
@@ -48,8 +46,6 @@ public class UserController {
         }
     }
 
-
-
     @RequestMapping("findfriend")
     @ResponseBody
     public Object FrindFriend(@RequestParam("myid") String myId){
@@ -69,7 +65,6 @@ public class UserController {
             return 0;
         }
     }
-
     @RequestMapping("/getuser")
     @ResponseBody
     public Map getSession(HttpServletRequest request) {

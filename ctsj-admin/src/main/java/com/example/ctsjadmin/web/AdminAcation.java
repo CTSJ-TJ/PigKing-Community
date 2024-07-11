@@ -1,9 +1,13 @@
 package com.example.ctsjadmin.web;
 
+import com.example.ctsjadmin.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -12,13 +16,18 @@ import java.util.Map;
 @Controller
 public class AdminAcation {
 
+    @Resource(name = "redisTemplate")
+    private RedisTemplate<String, Admin> redisTemplate;
+
     @RequestMapping("identity")
     @ResponseBody
-    public String mytest(HttpSession session,@RequestParam("adminid") String adminid, @RequestParam("adminname") String adminname){
+    public String mytest(@RequestParam("adminid") String adminid, @RequestParam("adminname") String adminname){
         if(adminid!=null&&adminname!=null){
-            System.out.println("Set:"+adminid+", "+adminname);
-            session.setAttribute("adminname", adminname);
-            session.setAttribute("adminid",adminid);
+            Admin admin = new Admin();
+            admin.setAdminid(Integer.parseInt(adminid));
+            admin.setAdminname(adminname);
+            redisTemplate.opsForValue().set("admin", admin);
+            System.out.println("admin: welcome my wg!!");
             return "yes";
         }else {
             return "no";
@@ -27,14 +36,20 @@ public class AdminAcation {
 
     @RequestMapping("/getadmin")
     @ResponseBody
-    public Map getSession(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String myname = (String) session.getAttribute("adminname");
-        String myid = (String) session.getAttribute("adminid");
-        Map<String,Object> map=new HashMap<>();
-        map.put("myname",myname);
-        map.put("myid",myid);
-        return map;
+    public Map getSession() {
+        Admin admin = redisTemplate.opsForValue().get("admin");
+        if (admin != null) {
+            String myid = String.valueOf(admin.getAdminid());
+            String myname = admin.getAdminname();
+            Map<String,Object> map=new HashMap<>();
+            System.out.println("map:"+myname+","+myid);
+            map.put("myname",myname);
+            map.put("myid",myid);
+            return map;
+        } else {
+            System.out.println("admin: this is");
+            return null;
+        }
     }
 
 
@@ -48,11 +63,6 @@ public class AdminAcation {
 //        System.out.println("the path:"+path);
         return path;
     }
-
-
-
-
-
 
     // 处理请求
 //    @RequestMapping(value = "/admin", method = RequestMethod.POST)
