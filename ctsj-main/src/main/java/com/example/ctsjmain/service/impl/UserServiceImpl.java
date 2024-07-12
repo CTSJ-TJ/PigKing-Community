@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
     public List<Friends> findfriend(String myid) {
         return userMapper.findfriend(myid);
     }
+
+    @Override
+    public int add(User user){
+        return userMapper.add(user);
+    }
 }

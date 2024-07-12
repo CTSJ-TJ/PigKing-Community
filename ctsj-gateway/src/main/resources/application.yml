@@ -27,6 +27,11 @@ spring:
           predicates:
             - Path=/admin/**
 
+        - id: websocket_route
+          uri: http://127.0.0.1:8888
+          predicates:
+            - Path=/websocket/**
+
         - id: default
           uri: https://www.hnit.edu.cn
           predicates:

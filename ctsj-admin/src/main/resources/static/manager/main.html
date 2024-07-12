@@ -27,7 +27,7 @@
         <a href="javascript:;">
 <!--          <img src="../images/1.jpg" class="layui-nav-img">-->
           欢迎您！尊敬的:&nbsp;&nbsp;
-          <span>初唐四杰</span>
+          <span id="mySpan">初唐四杰</span>
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">修改密码</a></dd>
@@ -85,6 +85,8 @@ layui.use(['element', 'layer', 'util'], function(){
   function myinit() {
      axios.get("../getadmin").then(result=>{
           alert(JSON.stringify(result.data));
+          var myname=result.data.myname;
+          document.getElementById("mySpan").innerText = myname;
      });
   }
   myinit();

@@ -127,8 +127,11 @@
 					},
 				},
 				mounted(){
-					axios.get("../user/getuser").then(result=>{
-						// alert(JSON.stringify(result.data));
+					var myid=localStorage.getItem("myid");
+					// alert("this id:"+myid);
+					axios.get("../user/getuser",{
+						params:{myid: myid}
+					}).then(result=>{
 						this.username=result.data.myname;
 						this.userid=result.data.myid;
 						if(this.username!=null && this.userid !=null){

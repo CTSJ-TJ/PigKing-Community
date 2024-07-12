@@ -135,6 +135,8 @@
     <script src="../js/axios-0.18.0.js"></script>
     <script src="../element-ui/lib/index.js"></script>
     <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+    <script src="../js/sockjs.min.js"></script>
+    <script src="../js/stomp.js"></script>
 </head>
 <body>
 <div id="app">
@@ -211,17 +213,22 @@
                 myid: 0,
                 myname: "猪王",
                 otherid: 0,
-                //聊天输入内容
                 content: "",
-                //表情框是否展示
                 emojiShow: false,
-                //表情列表
                 faceList: [],
-                //表情文本
                 getBrowString: "",
+                stompClient: null, // 添加这一行
             }
         },
         created() {
+            let socket = new SockJS('/websocket');
+            this.stompClient = Stomp.over(socket);
+            this.stompClient.connect({}, frame => {
+                this.stompClient.subscribe('/topic/messages', messageOutput => {
+                    console.log("Received: " + messageOutput.body);
+                    // 在这里更新你的前端界面
+                });
+            });
         },
         methods:{
             handleclick(id) {
@@ -271,7 +278,6 @@
                 this.emojiShow = false;
             },
             submitMessage(){
-                // alert(this.content)
                 axios.get("../message/addchat",{
                     params: {content:this.content,senderid: this.myid,
                         sendername: this.myname,receiverid:this.otherid}
@@ -279,13 +285,19 @@
                     console.log("msg:"+response.data);
                     this.handleclick(this.otherid);
                     this.content="";
-                });
+                    // 发送WebSocket消息
+                    this.stompClient.send("/app/chat", {}, JSON.stringify({
+                        'from': this.myname,
+                        'text': this.content
+                    }));
 
+                });
             }
         },
         mounted(){
             this.loadEmojis();
-            axios.get("../user/getuser").then(result=>{
+            var myid=localStorage.getItem("myid");
+            axios.get("../user/getuser",{params:{myid: myid}}).then(result=>{
                 // alert(JSON.stringify(result.data));
                 this.myname=result.data.myname;
                 this.myid=result.data.myid;

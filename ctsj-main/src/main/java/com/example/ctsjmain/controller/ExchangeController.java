@@ -3,20 +3,32 @@ package com.example.ctsjmain.controller;
 import com.example.ctsjmain.entity.Messages;
 import com.example.ctsjmain.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 @RequestMapping("message")
 public class ExchangeController {
     @Autowired
+    private SimpMessagingTemplate template;
+
+    @Autowired
     MessageService messageService;
+    @Resource
+    RestTemplate restTemplate;
 
     @RequestMapping("chat")
+    @SendTo("/topic/messages")
     @ResponseBody
     public List<Messages> findinteract(@RequestParam("myid") String myid, @RequestParam("otherid") String otherid){
         System.out.println("myid="+myid+",otherid="+otherid);
@@ -24,15 +36,16 @@ public class ExchangeController {
         return messageService.findinteract(myid,otherid);
     }
     @RequestMapping("addchat")
+    @SendTo("/topic/messages")
     @ResponseBody
     public int addchat(Messages messages){
-        // 在这里，你可以使用实体类的getter方法来获取请求参数
         System.out.println(messages.getContent());
         System.out.println(messages.getSenderid());
         System.out.println(messages.getSendername());
         System.out.println(messages.getReceiverid());
-
-        return messageService.addchat(messages);
+        int result = messageService.addchat(messages);
+        this.template.convertAndSend("/topic/updates", messages);
+        return result;
     }
 
 

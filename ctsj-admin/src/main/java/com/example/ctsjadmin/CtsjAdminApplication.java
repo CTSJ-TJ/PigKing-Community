@@ -46,4 +46,5 @@ public class CtsjAdminApplication {
         template.afterPropertiesSet();
         return template;
     }
+
 }

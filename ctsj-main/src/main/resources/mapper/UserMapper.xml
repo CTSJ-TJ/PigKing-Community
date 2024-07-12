@@ -10,4 +10,8 @@
     <select id="findfriend" parameterType="string" resultType="com.example.ctsjmain.entity.Friends">
         select * from friends where friendxid=#{myid} or friendyid=#{myid};
     </select>
+
+    <insert id="add" parameterType="com.example.ctsjmain.entity.User" useGeneratedKeys="true">
+        insert into myuser values(null,#{username},#{userpwd},null,null,curdate(),1)
+    </insert>
 </mapper>

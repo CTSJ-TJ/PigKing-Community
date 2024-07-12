@@ -8,4 +8,6 @@ import java.util.List;
 public interface UserService {
     User login(User user);
     List<Friends> findfriend(String myid);
+
+    int add(User user);
 }
