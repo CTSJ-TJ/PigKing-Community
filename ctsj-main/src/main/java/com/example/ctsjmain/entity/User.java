@@ -9,6 +9,8 @@ public class User implements Serializable {
     private Integer userid;
     private String username;
     private String userpwd;
+    private String usersex;
+    private String userimage;
     private String usertel;
     private String useremail;
     private String usertime;

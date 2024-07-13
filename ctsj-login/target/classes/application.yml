@@ -1,0 +1,14 @@
+login:
+  enable: true
+  user-table: xxxx
+  name-column: aaaa
+  pwd-column: bbbb
+  email-column: cccc
+  # ?????
+  entity-class: com.yc.xxx.bean.User
+  # ??????????
+  auth-urls:
+    - /order.html
+    - /user_info.html
+    - /queryOrder.do
+  send-email: 2292619425@qq.com

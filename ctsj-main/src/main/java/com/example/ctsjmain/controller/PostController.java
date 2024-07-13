@@ -41,9 +41,7 @@ public class PostController{
     @RequestMapping(value = "addpost", method = RequestMethod.POST)
     @ResponseBody
     public int AddPost(@RequestBody Posts posts){
-        System.out.println("the add:"+posts.getPosttitle()+","+posts.getPostpassege());
-//        System.out.println("who add:"+postService.addpost(posts));
-//        return postService.addpost(posts);
+        System.out.println("the add:"+posts.toString());
         int result = postService.addpost(posts);
         System.out.println("who add:"+ result);
         return result;

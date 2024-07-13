@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.example.ctsjmyai.CtsjMyaiApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.317 s <<< FAILURE! - in com.example.ctsjmyai.CtsjMyaiApplicationTests
+contextLoads  Time elapsed: 0.006 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalArgumentException: Cannot instantiate interface org.springframework.boot.BootstrapRegistryInitializer : org.springframework.cloud.bootstrap.RefreshBootstrapRegistryInitializer
+Caused by: java.lang.UnsupportedClassVersionError: org/springframework/cloud/bootstrap/RefreshBootstrapRegistryInitializer has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+

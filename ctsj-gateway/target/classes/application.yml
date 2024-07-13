@@ -1,0 +1,38 @@
+#spring:
+#  application:
+#   name: ctsj-gateway
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:11010/eureka/
+
+server:
+  port: 9999
+
+spring:
+  application:
+    name: ctsj-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: http://127.0.0.1:10006
+          predicates:
+            - Path=/yyds/**
+
+        - id: route2
+          uri: http://127.0.0.1:10006
+          predicates:
+            - Path=/admin/**
+
+        - id: websocket_route
+          uri: http://127.0.0.1:8888
+          predicates:
+            - Path=/websocket/**
+
+        - id: default
+          uri: https://www.hnit.edu.cn
+          predicates:
+            - Path=/**

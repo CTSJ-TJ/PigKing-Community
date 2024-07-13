@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.example.ctsjadmin.CtsjAdminApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 9.201 s <<< FAILURE! - in com.example.ctsjadmin.CtsjAdminApplicationTests
+contextLoads  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.session.SessionAutoConfiguration$ServletSessionRepositoryValidator': Invocation of init method failed; nested exception is org.springframework.boot.autoconfigure.session.SessionRepositoryUnavailableException: No session repository could be auto-configured, check your configuration (session store type is 'redis')
+Caused by: org.springframework.boot.autoconfigure.session.SessionRepositoryUnavailableException: No session repository could be auto-configured, check your configuration (session store type is 'redis')
+
