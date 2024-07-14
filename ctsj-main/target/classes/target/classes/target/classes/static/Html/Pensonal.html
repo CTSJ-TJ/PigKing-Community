@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模仿CSDN个人主页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("../image/blacked.jpg");
+        }
+
+        .header {
+            margin-top: 20px;
+            background-color: #ffffff;
+            color: red;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px; /* 添加间隔 */
+            margin-left: 30%;
+            margin-right: 10%;
+            box-shadow: 0px 0px 10px #ffffff; /* 添加纯白色阴影 */
+        }
+        .sidebar {
+            margin-top: 20px;
+            width: 200px;
+            height: 89%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #f6f8fa;
+            padding: 20px;
+            overflow: auto;
+            margin-left: 10%;
+            margin-bottom: 50px;
+            box-shadow: 0px 0px 10px #ffffff; /* 添加纯白色阴影 */
+        }
+        .sidebar h2, .sidebar p {
+            margin: 0 0 15px 0;
+        }
+        .content {
+            margin-left: 30%;
+            margin-right: 10%;
+            padding: 20px;
+            background-color: #ffffff; /* 纯白背景 */
+            margin-bottom: 20px; /* 添加间隔 */
+            box-shadow: 0px 0px 10px #ffffff; /* 添加纯白色阴影 */
+        }
+        .content h2 {
+            color: #24292e;
+        }
+        .content p {
+            margin: 0 0 15px 0;
+        }
+        .article {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<!--引入相关的文件-->
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+<script src="../js/axios-0.18.0.js"></script>
+<body>
+    <div id="app">
+            <div class="header">
+                <h1>我的CSDN主页</h1>
+            </div>
+            <div class="sidebar">
+                <h2>个人信息</h2>
+                <p>姓名：张三</p>
+                <p>职业：前端开发</p>
+            </div>
+            <div class="content">
+                <h2>我的文章</h2>
+                <div class="article" v-for="article in articles">
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.content }}</p>
+                </div>
+            </div>
+    </div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            articles: [
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
+                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
+                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' }
+            ]
+        }
+    });
+</script>
+</body>
+</html>

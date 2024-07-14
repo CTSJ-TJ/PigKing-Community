@@ -52,11 +52,8 @@ public class AdminAcation {
     @RequestMapping("yyds")
     @ResponseBody
     public String mytest(HttpServletRequest request){
-//        System.out.println("hello!!");
-//        return new ModelAndView("redirect:manager/main.html" );
         int port=request.getServerPort();
         String path="http://127.0.0.1:"+port+"/manager/main.html";
-//        System.out.println("the path:"+path);
         return path;
     }
 

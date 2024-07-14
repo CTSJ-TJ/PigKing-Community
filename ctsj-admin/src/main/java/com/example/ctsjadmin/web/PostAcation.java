@@ -14,9 +14,17 @@ public class PostAcation {
     RestTemplate restTemplate;
 
     @RequestMapping("findall")
-    public Object findall(){
+    public Object findall(@RequestParam("status") String status){
         return restTemplate.getForObject(
-                "http://ctsj-main/post/findall",
+                "http://ctsj-main/post/findall?status="+status,
+                String.class);
+    }
+
+    @RequestMapping("findlike")
+    public Object findlike(@RequestParam("status") String status,@RequestParam("like") String likestring){
+        String path="http://ctsj-main/post/findlike?status="+status+"&like="+likestring;
+        return restTemplate.getForObject(
+                path,
                 String.class);
     }
 

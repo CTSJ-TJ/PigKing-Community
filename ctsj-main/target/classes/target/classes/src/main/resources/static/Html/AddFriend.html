@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加好友</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #app {
+            display: flex;
+            flex-direction: column; /* 修改为上下布局 */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* 增大app框的宽度 */
+            height: 80vh;
+        }
+        .add-friend-form {
+            margin-bottom: 20px;
+        }
+        .add-friend-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .add-friend-form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .search-results li {
+            padding: 10px;
+            border: 1px solid #ddd; /* 添加边框 */
+            border-radius: 5px; /* 添加圆角 */
+            list-style-type: none; /* 移除列表标记 */
+            transition: all 0.3s ease; /* 添加过渡效果 */
+            margin-bottom: 10px; /* 添加底部外边距 */
+        }
+        .search-results li:hover {
+            background-color: #e6e6e6; /* 鼠标悬停时改变背景颜色 */
+        }
+        .search-results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            height: 400px; /* 设置一个固定高度 */
+            overflow-y: auto; /* 当内容超出高度时出现滚动条 */
+        }
+    </style>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="add-friend-form">
+        <h2>添加好友</h2>
+        <input type="text" v-model="query" placeholder="输入好友的用户名">
+        <button @click="search">添加</button>
+    </div>
+    <div class="search-results">
+        <h2>搜索结果</h2>
+        <ul id="results">
+            <li v-for="result in results" :key="result">{{ result }}</li>
+        </ul>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                query: '',
+                results: []
+            }
+        },
+        methods: {
+            search() {
+                setTimeout(() => {
+                    this.results = ['结果1', '结果2', '结果3',, '结果2', '结果3', '结果2', '结果3', '结果2', '结果3'];
+                }, 1000);
+            }
+        },
+        mounted(){
+        }
+    });
+</script>
+</body>
+</html>

@@ -128,7 +128,7 @@
                     <span>发布时间: {{time[i-1]}}</span>
                     <span>点赞数: {{likes[i-1]}}</span>
                     <span>收藏数: {{collections[i-1]}}</span>
-                    <span>作者: {{id[i-1]}}</span>
+                    <span>作者: {{userid[i-1]}}</span>
                 </div>
             </li>
         </ul>
@@ -147,18 +147,19 @@
                 time:[],
                 likes:[],
                 collections:[],
-                id:[],
+                userid:[],
+                postid:[],
                 searchText: ''
             }
         },
         methods: {
             find(i){
-                let ids=this.id[i-1]
+                let ids=this.postid[i-1]
                 document.location.href="Showtime.html";
                 localStorage.setItem('postid', ids);
             },
             finaAll(){
-                axios.get("../post/findall").then(response=>{
+                axios.get("../post/findall?status=1").then(response=>{
                     console.log("my:"+response.data)
                     for (let post of response.data) {
                         // alert(JSON.stringify(post))
@@ -167,13 +168,38 @@
                         this.time.push(post.posttime);
                         this.likes.push(post.postlikes);
                         this.collections.push(post.collections);
-                        this.id.push(post.postid);
+                        this.userid.push(post.userid);
+                        this.postid.push(post.postid);
                     }
                     this.count=this.title.length;
                 });
             },
             showAlert() {
                 alert('你搜索的内容是: ' + this.searchText);
+                axios.get("../post/findlike?status=1&like="+this.searchText).then(response=>{
+                    this.cleans();
+                    for (let post of response.data) {
+                        // alert(JSON.stringify(post))
+                        this.title.push(post.posttitle);
+                        this.passege.push(post.postpassege);
+                        this.time.push(post.posttime);
+                        this.likes.push(post.postlikes);
+                        this.collections.push(post.collections);
+                        this.userid.push(post.userid);
+                        this.postid.push(post.postid);
+                    }
+                    this.count=this.title.length;
+                });
+            },
+            cleans(){
+                this.title=[];
+                this.passege=[];
+                this.id=[];
+                this.time=[];
+                this.likes=[];
+                this.collections=[];
+                this.postid=[];
+                this.userid=[];
             }
         },
         mounted(){

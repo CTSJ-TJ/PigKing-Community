@@ -84,7 +84,7 @@ layui.use(['element', 'layer', 'util'], function(){
 
   function myinit() {
      axios.get("../getadmin").then(result=>{
-          alert(JSON.stringify(result.data));
+          // alert(JSON.stringify(result.data));
           var myname=result.data.myname;
           document.getElementById("mySpan").innerText = myname;
      });

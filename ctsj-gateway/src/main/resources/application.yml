@@ -1,6 +1,4 @@
-#spring:
-#  application:
-#   name: ctsj-gateway
+
 eureka:
   client:
     serviceUrl:
@@ -18,7 +16,7 @@ spring:
     gateway:
       routes:
         - id: route1
-          uri: http://127.0.0.1:10006
+          uri: lb://ctsj-admin
           predicates:
             - Path=/yyds/**
 

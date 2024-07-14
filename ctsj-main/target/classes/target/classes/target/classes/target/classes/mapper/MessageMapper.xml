@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ctsjmain.mapper.MessageMapper">
+    <select id="findinteract" parameterType="string" resultType="com.example.ctsjmain.entity.Messages">
+        select * from messages where (senderid=#{otherid} and receiverid=#{myid}) or
+                                     (senderid=#{myid} and receiverid=#{otherid}) order by createtime
+    </select>
+    <insert id="addchat" parameterType="com.example.ctsjmain.entity.Messages" useGeneratedKeys="true">
+        insert into messages values(null,#{content},#{senderid},#{sendername},#{receiverid},null,now(),1)
+    </insert>
+</mapper>

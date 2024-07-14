@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('../image/bunew5.jpg');
+      background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #app{
+        width: 70%;
+        margin-top: 100px;
+    }
+    .container {
+      background-image: url('../image/dong01.gif');
+      background-size: contain;
+      background-repeat: repeat-x;
+      width: 65%;
+      margin: auto;
+      padding: 20px;
+      background-color: #f8f8f8;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px #ccc;
+    }
+    input[type="text"], textarea {
+      width: 95%;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #outputBox{
+      height: 200px;
+    }
+  </style>
+</head>
+<script src="../js/vue.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<body>
+<div id="app">
+      <div class="container">
+          <h1 style="font-family: 华文新魏;color:darkmagenta">英语单词翻译</h1>
+          <input type="text" id="inputBox" placeholder="请输入单词"  v-model="eword">
+          <button @click="showOutput()">开始翻译</button>
+          <textarea id="outputBox" placeholder="点击翻译开始翻译单词....." v-model="echina" readonly></textarea>
+      </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                eword: '',
+                echina: ''
+            }
+        },
+        methods: {
+            showOutput:function (){
+                if(this.eword.length<0){
+                    alert("请输入单词！！！")
+                }else{
+                    alert("学习："+this.eword);
+                    axios.get('../English',{params:{op:"find",eword:this.eword}}).then(response => {
+                        console.log(response.data)
+                        if(response.data.code>0){
+                            this.echina=response.data.data[0].echina;
+                        }else{
+                            this.eword="";
+                            this.echina="";
+                            alert("查无此单词！！！");
+                        }
+                    })
+                }
+            },
+            FoundTest:function (){
+               console.log("这是一个事件");
+               alert("学习")
+            }
+
+        }
+    });
+
+
+  // function showOutput() {
+  //   var input = document.getElementById('inputBox').value;
+  //   alert("学习："+input);
+  //   document.getElementById('outputBox').value = input;
+  // }
+</script>
+</body>
+</html>

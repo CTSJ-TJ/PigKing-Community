@@ -15,8 +15,13 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
 
     @Override
-    public List<Posts> findall(){
-        return postMapper.findall();
+    public List<Posts> findall(String status){
+        return postMapper.findall(status);
+    }
+
+    @Override
+    public List<Posts> findlike(String status,String likestring){
+        return postMapper.findlike(status,likestring);
     }
 
     @Override

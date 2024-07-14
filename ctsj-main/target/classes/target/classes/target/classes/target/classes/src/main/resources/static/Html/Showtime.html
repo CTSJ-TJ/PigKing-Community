@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>查看帖子</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    .blog-view-container {
+      max-width: 90%;
+      margin: 0 auto;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .title {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .内容 {
+      font-size: 1em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div id="app" class="blog-view-container">
+  <div class="title">{{ title }}</div>
+  <div v-html="htmlContent" class="内容"></div>
+</div>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../editor.md/lib/marked.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      title: '这是标题',
+      postContent: '# 这是内容\n\n这是一段普通的文本。'
+    },
+    computed: {
+      htmlContent: function () {
+        return marked(this.postContent);
+      }
+    },
+    methods:{
+      findId(){
+        let data = localStorage.getItem('postid');
+        // alert("show:"+data);
+        // 请求：127.0.0.1:8888/post/findId?postid=5
+        axios.post("../post/findId?postid="+data).then(response=>{
+             console.log(response.data)
+          this.title=response.data.posttitle;
+          this.postContent=response.data.postpassege;
+        });
+
+      }
+    },
+    mounted(){
+      this.findId();
+    }
+  });
+</script>
+</body>
+</html>

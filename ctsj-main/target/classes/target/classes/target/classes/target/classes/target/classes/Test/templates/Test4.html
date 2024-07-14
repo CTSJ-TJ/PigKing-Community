@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>百度地图API示例</title>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rXA8iQy9OhoIKkZEjWbO0xJR5c40gDcg"></script>
+</head>
+<body>
+<div id="map" style="width: 500px; height: 400px;"></div>
+<script type="text/javascript">
+  // 创建地图实例
+  var map = new BMap.Map("map");
+
+  // 检查浏览器是否支持Geolocation API
+  if ("geolocation" in navigator) {
+    // 获取用户当前位置信息
+    navigator.geolocation.getCurrentPosition(function(position) {
+      // 获取经纬度坐标
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      // 在控制台输出经纬度信息
+      alert(latitude + ", "+ longitude);
+
+      // 在这里可以将经纬度坐标用于你的应用程序逻辑
+    });
+  } else {
+    // 如果浏览器不支持Geolocation API，给出提示或者采取其他措施
+    console.log("Geolocation is not supported by this browser.");
+  }
+
+
+  // 创建点坐标
+  var point = new BMap.Point( 135.5022535,34.6937249);
+  // 初始化地图，设置中心点坐标和地图级别
+  map.centerAndZoom(point, 15);
+
+  // 添加标注
+  var marker = new BMap.Marker(point);
+  map.addOverlay(marker);
+
+  //112.6807824,26.8842806
+  //34.6937249, 135.5022535
+  // 绘制路线
+  var points = [
+    new BMap.Point(112.680, 26.884),
+    new BMap.Point(112.682, 26.884),
+    new BMap.Point(112.683, 26.884),
+    new BMap.Point(112.684, 26.884)
+  ];
+  var polyline = new BMap.Polyline(points, {
+    strokeColor: "blue",
+    strokeWeight: 2,
+    strokeOpacity: 0.5
+  });
+  map.addOverlay(polyline);
+</script>
+</body>
+</html>

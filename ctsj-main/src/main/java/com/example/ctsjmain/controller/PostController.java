@@ -26,8 +26,14 @@ public class PostController{
     PostService postService;
     @RequestMapping("findall")
     @ResponseBody
-    public Object getUsers(){
-        return postService.findall();
+    public Object findall(@RequestParam("status") String status){
+        return postService.findall(status);
+    }
+
+    @RequestMapping("findlike")
+    @ResponseBody
+    public Object findlike(@RequestParam("status") String status,@RequestParam("like") String likestring){
+        return postService.findlike(status,likestring);
     }
 
     @RequestMapping("findId")
@@ -37,6 +43,8 @@ public class PostController{
         System.out.println("who:"+postService.findId(postId).toString());
         return postService.findId(postId);
     }
+
+
 
     @RequestMapping(value = "addpost", method = RequestMethod.POST)
     @ResponseBody
