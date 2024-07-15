@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #app{
+      border: 2px red solid;
+    }
+    #inputBox {
+      margin-left: 10%;
+      width: 80%;
+      height: 100px;
+      border: 1px solid #000;
+      padding: 10px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
+    }
+    #submitButton {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #submitButton:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<script src="../js/vue.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<body>
+<div id="app">
+  <div id="inputBox" contenteditable="true" @input="updateContent"></div>
+  <button id="submitButton" @click="submit">提交</button>
+</div>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        inputContent: ''
+      }
+    },
+    methods: {
+      updateContent(e) {
+        this.inputContent = e.target.innerText;
+      },
+      submit() {
+        alert(this.inputContent);
+      }
+    }
+  });
+</script>
+</body>
+</html>
