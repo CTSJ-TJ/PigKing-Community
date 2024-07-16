@@ -1,6 +1,8 @@
 insert into mypost values(null,"学习新思想","# 在这里写下一篇帖子 ##
 伟哥要去学习了",1001,curdate(),0,0,0)
-select * from mypost order by posttime DESC;
+select * from mypost where status=1 order by posttime DESC;
+
+select * from mypost where status=0 and (posttitle like "%伟哥%" or postpassege like "%伟哥%") order by posttime DESC;
 
 insert into myuser values(null,"鹏哥","123456",null,null,curdate(),1)
 
@@ -10,7 +12,7 @@ insert into  admin values(null,"朱王","123456",null,null,1)
 
 select * from admin;
 
-insert into friends values(null,1,"伟哥",3,"鹏哥",1)
+insert into friends values(null,1,"伟哥",4,"刘总",1)
 select * from friends ;
 select * from friends where friendxid=1002 or friendyid=1002;
 

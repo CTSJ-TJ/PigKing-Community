@@ -62,7 +62,7 @@ Vue.component("vote",{
                 this.$emit('find', this.keywords);
             } else {
                 localStorage.setItem("keywords", this.keywords);
-                location.href = "/index.html";
+                location.href = "/video.html";
             }
         }
     }

@@ -1,6 +1,4 @@
-#spring:
-#  application:
-#   name: ctsj-gateway
+
 eureka:
   client:
     serviceUrl:

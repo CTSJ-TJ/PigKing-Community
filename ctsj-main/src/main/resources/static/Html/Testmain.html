@@ -41,7 +41,7 @@
 			<el-container style="height: 850px; border: 1px solid #eee">
 				<el-header id="mytitle" style="background-color:rgb(238, 241, 246); text-align: left; font-size: 36px; line-height: 90px; height: 100px;">
 					<img src="../image/dong01.gif" style="width: 100px; float: left;" />
-					<span style="margin-left:10%;color: firebrick;">欢迎来到CTSJ的资源社区</span>
+					<span style="margin-left:10%;color: firebrick;">欢迎来到CTSJ的多功能社区</span>
 					<span style="float: right;font-size: 24px;">
                     <el-avatar id="avatar"> CTSJ </el-avatar>
                     <span id="name" style="font-family: 华文新魏">{{username}}</span>
@@ -67,13 +67,13 @@
 							</el-submenu>
 							<el-submenu index="4">
 								<template slot="title"><i class="el-icon-menu"></i>社区AI</template>
-								<el-menu-item index="3-1" @click="changePages(7)">新增单词</el-menu-item>
-								<el-menu-item index="3-2" @click="changePages(11)">单词翻译</el-menu-item>
+								<el-menu-item index="3-1" @click="changePages(7)">摘要生成</el-menu-item>
+								<el-menu-item index="3-1" @click="changePages(12)">关键词提取</el-menu-item>
+								<el-menu-item index="3-2" @click="changePages(11)">情感分析</el-menu-item>
 							</el-submenu>
 							<el-submenu index="5">
 								<template slot="title"><i class="el-icon-location"></i>休闲娱乐</template>
-								<el-menu-item index="3-1" @click="changePages(8)">社区打车</el-menu-item>
-								<el-menu-item index="3-2" @click="changePages(9)">社区影院</el-menu-item>
+								<el-menu-item index="3-2" @click="changePages(8)">社区影院</el-menu-item>
 							</el-submenu>
 
 							<el-submenu index="6">
@@ -113,15 +113,19 @@
 						} else if(i == 6){
 							this.mainsrc = "AddFriend.html"
 						} else if(i == 7){
-							this.mainsrc = "Study07.html"
+							this.mainsrc = "Abstract.html"
 						} else if(i == 8){
-							this.mainsrc = "Study08.html"
+							this.mainsrc = "video.html"
 						}else if(i==9){
-							this.mainsrc = "Study09.html"
+							this.mainsrc = "Modify.html"
 						}else if(i==10){
 							this.mainsrc = "Study10.html"
 						}else if(i==11){
-							this.mainsrc = "Study11.html"
+							this.mainsrc = "Emotion.html"
+						}else if(i==12){
+							this.mainsrc = "Keywords.html"
+						}else if(i==13){
+							this.mainsrc = "Emotion.html"
 						}
 					},
 					login:function(){

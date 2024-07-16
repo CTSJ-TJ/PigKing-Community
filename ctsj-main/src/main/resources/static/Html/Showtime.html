@@ -19,31 +19,113 @@
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
+    #bottom{
+      max-width: 90%;
+      margin: 0 auto;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
     .title {
       font-size: 2em;
       color: #333;
       margin-bottom: 20px;
     }
-    .内容 {
+    .content {
       font-size: 1em;
       color: #666;
     }
+
+    .comment {
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .comment h3 {
+      margin: 0;
+      color: #333;
+      font-size: 16px;
+    }
+    .comment p {
+      margin: 5px 0;
+    }
+    .comment-input {
+      margin-top: 20px;
+    }
+    .comment-input textarea {
+      width: 100%;
+      height: 100px;
+      padding: 5px;
+    }
+    .comment-input button {
+      margin-top: 10px;
+      padding: 5px 10px;
+    }
+
   </style>
 </head>
-<body>
-<div id="app" class="blog-view-container">
-  <div class="title">{{ title }}</div>
-  <div v-html="htmlContent" class="内容"></div>
-</div>
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../editor.md/lib/marked.min.js"></script>
 <script src="../js/axios-0.18.0.js"></script>
+<script src="../element-ui/lib/index.js"></script>   <!--引入组件库-->
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">  <!--引入样式库-->
+<body>
+<div id="app">
+  <div class="blog-view-container">
+    <div class="title">{{ title }}</div>
+    <div v-html="htmlContent" class="content"></div>
+    <ul class="bottoms" style="display: flex; justify-content: flex-end; list-style-type: none;">
+      <li class="clikzhan" style="margin-right: 20px;">
+        <a class="tool-click" style="display: flex; align-items: center;" @click="toggleImage">
+          <img class="end" v-show="!showStart" src="../image/zhan02.png" alt="" style="width: 20px; height: 20px;">
+          <img class="start" v-show="showStart" src="../image/zhan01.png" alt="" style="width: 20px; height: 20px;">
+          <span id="clickcount"style="color: rgb(153, 154, 170); margin-left: 10px;">{{clicks}}</span>
+        </a>
+      </li>
+      <li class="collect">
+        <a class="tool-collect" style="display: flex; align-items: center;" @click="toggleImage1">
+          <img class="end" v-show="!showStart1" src="../image/shou02.png" alt="" style="width: 20px; height: 20px;">
+          <img class="start" v-show="showStart1" src="../image/shou01.png" alt="" style="width: 20px; height: 20px;">
+          <span id="collectount"style="color: rgb(153, 154, 170); margin-left: 10px;">{{collects}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div id="bottom">
+    <div class="comment-input">
+      <textarea v-model="newComment" placeholder="输入你的评论..."></textarea>
+      <button @click="submitComment">提交评论</button>
+    </div>
+    <div class="comment" v-for="observe in observes" :key="observe.id">
+      <h3>{{ observe.username }}</h3>
+      <p>{{ observe.observeContent }}</p>
+      <p>{{ observe.createDate }}</p>
+    </div>
+  </div>
+
+</div>
 <script>
   new Vue({
     el: '#app',
     data: {
       title: '这是标题',
-      postContent: '# 这是内容\n\n这是一段普通的文本。'
+      postContent: '# 这是内容\n\n这是一段普通的文本。',
+      showStart: true,
+      showStart1: true,
+      clicks:20,
+      collects:10,
+      observes: [
+              {"id":1,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+              {"id":2,"postid":2,"username":"伟哥", "lastId": 1,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+              {"id":3,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+      ],
+      newComment:''
     },
     computed: {
       htmlContent: function () {
@@ -53,20 +135,37 @@
     methods:{
       findId(){
         let data = localStorage.getItem('postid');
-        // alert("show:"+data);
-        // 请求：127.0.0.1:8888/post/findId?postid=5
         axios.post("../post/findId?postid="+data).then(response=>{
              console.log(response.data)
           this.title=response.data.posttitle;
           this.postContent=response.data.postpassege;
         });
-
+      },
+      toggleImage: function() {
+        this.showStart = !this.showStart;
+        if(this.showStart){
+          this.clicks-=1;
+        }else{
+          this.clicks+=1;
+        }
+      },
+      toggleImage1: function() {
+        this.showStart1 = !this.showStart1;
+        if(this.showStart1){
+          this.collects-=1;
+        }else{
+          this.collects+=1;
+        }
+      },
+      submitComment:function() {
+       alert("点击了");
       }
     },
     mounted(){
       this.findId();
     }
   });
+
 </script>
 </body>
 </html>
