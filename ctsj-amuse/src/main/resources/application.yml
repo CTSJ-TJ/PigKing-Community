@@ -1,0 +1,21 @@
+spring:
+  application:
+      name: ctsj-amuse
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql:///my_community
+      username: root
+      password: 123456
+
+server:
+  port: 9898
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# ??????
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*Mapper.xml

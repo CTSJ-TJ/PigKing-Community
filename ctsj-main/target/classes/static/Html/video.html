@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>aha视频</title>
+    <link rel="icon" href="../images/title.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <style lang="less" scoped>
+        .header{
+            background-color: white;
+            margin-top: -8px;
+            color: #333;
+            text-align: left;
+            line-height: 60px;
+            position: fixed;
+            width: 100%;
+        }
+
+        .touxiang{
+            width: 40px;
+            line-height: 20px;
+            float: left;
+            margin-top: 10px;
+            margin-left: 20px;
+            max-width: 100%;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .mouse-hover{
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .tag{
+            margin-top: 10px;
+            margin-left: 30px;
+            width: 90px;
+            text-align: center;
+        }
+
+        .video-div{
+            width: 266px;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+
+        .video-div-title{
+            font-size: smaller;
+            margin-top: 0px;
+            width: 100%;
+            height: 40px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .footer {
+            color: #333;
+            text-align: center;
+        }
+
+        .main {
+            color: #333;
+        }
+    </style>
+</head>
+
+<!--引入相关的文件-->
+<script src="../js/vue.js"></script>   <!--引入vue.js文件-->
+<script src="../element-ui/lib/index.js"></script>   <!--引入组件库-->
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">  <!--引入样式库-->
+<script src="../js/axios-0.18.0.js"></script>   <!--引入axios库-->
+
+<body>
+
+<div id="app">
+    <el-container>
+        <!--头部-->
+        <el-header class="header">
+			<el-row>
+				<el-col :span="6">
+                    <a href="video.html">
+                        <image src="../images/logo.png" style="height: 40px;margin-top: 10px;"></image>
+                    </a>
+                </el-col>
+				<el-col :span="8">
+                    <div style="text-align: left;float: left">
+                        <el-row style="">
+                            <el-input
+                                    placeholder="请输入内容"
+                                    v-model="selectkey"
+                                    clearable
+                                    size="small"
+                                    style="width: 300px">
+                            </el-input>
+                            <i class="el-icon-search mouse-hover" @click="selectByKey"></i>
+                        </el-row>
+                    </div>
+                </el-col>
+				<el-col :span="9">
+                    <div style="">
+                        <el-row>
+                            <el-image :src=avatar class="touxiang" @click="getPersonInfo"></el-image>
+                            <i class="el-icon-chat-dot-square mouse-hover" style="margin-left: 20px" @click="lookMessage">消息</i>
+                            <i class="el-icon-orange mouse-hover" style="margin-left: 20px" @click="lookTrends">动态</i>
+                            <i class="el-icon-star-off mouse-hover" style="margin-left: 20px" @click="lookCollections">收藏</i>
+                            <i class="el-icon-time mouse-hover" style="margin-left: 20px" @click="lookRecord">历史</i>
+                            <el-button type="primary" round size="small" style="margin-left: 20px" @click="uploadVideo">投稿</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+			</el-row>
+		</el-header>
+
+		<!--主体-->
+        <el-main class="main">
+            <div style="margin-top: 40px">
+                <!--分类-->
+                <div style="width: 80%;margin-top: 10px;margin-left: 110px">
+                    <el-tag type="info" class="tag mouse-hover" v-for="type in types" @click="selectByType">{{type.typeName}}</el-tag>
+                </div>
+                <!--视频-->
+                <div style="width: 100%;display: flex;flex-wrap: wrap;">
+                    <div class="video-div" v-for="video in videos">
+                        <!--图片和基本信息-->
+                        <div style="width: 100%;cursor: pointer" @click="lookVideo(video.id)">
+                            <el-image :src=video.image style="width: 100%;height: 150px;max-width: 100%;z-index: 0;"></el-image>
+                            <div style="width: 100%;float: left;margin-top: -28px;z-index: 10;">
+                                    <span>
+                                        <i class="el-icon-video-play" style="margin-left: 10px"></i>
+                                        <i style="font-size: smaller">{{video.lookCount}}</i>
+                                        <i style="font-size: smaller;margin-left: 150px">{{video.longTime}}</i>
+                                    </span>
+                            </div>
+                        </div>
+                        <!--标题和博主发布时间-->
+                        <div>
+                            <p class="video-div-title" @click="lookVideo(video.id)" onmouseover="this.style.color='#3a8ee6';" onmouseout="this.style.color='#000';">
+                                {{video.title}}
+                            </p>
+                            <div style="margin-top: -15px">
+                                <span class="mouse-hover" @click="getOtherInfo(video.userId)" style="color: #8c939d" onmouseover="this.style.color='#3a8ee6';" onmouseout="this.style.color='#8c939d';">
+                                    <i class="el-icon-user"></i>
+                                    <i style="font-size: smaller">{{video.userName}}</i>
+                                    <i style="font-size: smaller;margin-left: 10px">{{video.uploadTime.slice(5, 10)}}</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </el-main>
+
+        <!--底部-->
+        <el-footer class="footer">
+            <div>
+                <hr>
+                <p>本社区视频合作商：aha传媒有限公司</p>
+                <p>版权所有：aha传媒有限公司</p>
+            </div>
+        </el-footer>
+
+    </el-container>
+</div>
+
+<script>
+    // request拦截器，将用户token放入头中
+    let token = localStorage.getItem("token");
+    axios.interceptors.request.use(
+        config => {
+            if(token) config.headers['authorization'] = token
+            return config
+        },
+        error => {
+            console.log(error)
+            return Promise.reject(error)
+        }
+    )
+    new Vue({
+        el: '#app',
+        data:{
+            selectkey:'',
+            types:[],
+            videos:[],
+            avatar:'',
+        },
+        methods:{
+            // 获取所有视频类型
+            getVideoType(){
+                return axios.get("/video-service/video/getAllType");
+            },
+            // 获取所有视频
+            getVideo(){
+                return axios.get("/video-service/video/getAllVideo");
+            },
+            getUserAvatar(){
+                return axios.get("/user-service/user/getAvatar");
+            },
+            loadData() {
+                this.loading = true;
+                axios.all([this.getVideoType(), this.getVideo(),this.getUserAvatar()])
+                    .then(axios.spread((response1, response2,response3) => {
+                        console.log(response1.data);
+                        this.types = response1.data.data;
+                        this.videos = response2.data.data;
+                        console.log(this.types);
+                        console.log(this.videos);
+                        if (response3.data.success){
+                            this.avatar = response3.data.data;
+                            localStorage.setItem("userAvatar",response3.data.data);
+                        }
+                    }))
+                    .catch(error => {
+                        console.error('发生错误：', error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            },
+            // 搜索请求
+            selectByKey(){
+                alert("点击搜索");
+            },
+            // 查看个人主页
+            getPersonInfo(){
+                localStorage.setItem("isMyself",true);
+                window.open("userInfo.html","_blank");
+            },
+            // 查看他人主页
+            getOtherInfo(userId){
+                axios.get("/user-service/user/isMyself?userId=" + userId).then(response => {
+                    if (response.data.success){
+                        localStorage.setItem("isMyself",true);
+                    }else{
+                        localStorage.setItem("isMyself",false);
+                        localStorage.setItem("otherUserId",userId);
+                    }
+                });
+                window.open("userInfo.html","_blank");
+            },
+            // 查看消息
+            lookMessage(){
+                alert("查看消息");
+            },
+            // 查看动态
+            lookTrends(){
+                alert("查看动态");
+            },
+            // 查看收藏
+            lookCollections(){
+                alert("查看收藏");
+            },
+            // 查看历史记录
+            lookRecord(){
+                alert("查看历史记录");
+            },
+            // 上传视频
+            uploadVideo(){
+                alert("上传视频");
+            },
+            // 分类查看
+            selectByType(){
+                // 指定你想要跳转的 URL
+                const url = 'byType.html';
+                // 使用 window.open 在新标签页中打开指定 URL
+                window.open(url, '_blank');
+                alert("分类查看");
+            },
+            // 点击，观看视频
+            lookVideo(videoId){
+                localStorage.setItem("videoId",videoId);
+                window.open("lookVideo.html","_blank");
+            },
+
+        },
+        mounted() {
+            this.loadData();
+        },
+    });
+</script>
+
+</body>
+</html>
