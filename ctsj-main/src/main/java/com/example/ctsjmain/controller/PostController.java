@@ -55,6 +55,8 @@ public class PostController{
         return result;
     }
 
+
+
     @RequestMapping("gateway")
     public String user(){
         return  restTemplate.getForObject(
