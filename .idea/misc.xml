@@ -7,10 +7,24 @@
         <option value="$PROJECT_DIR$/ctsj-index/pom.xml" />
         <option value="$PROJECT_DIR$/ctsj-eureka/pom.xml" />
         <option value="$PROJECT_DIR$/ctsj-main/pom.xml" />
+        <option value="$PROJECT_DIR$/ctsj-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/ctsj-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/ctsj-login/pom.xml" />
+        <option value="$PROJECT_DIR$/ctsj-myai/pom.xml" />
+        <option value="$PROJECT_DIR$/ctsj-amuse/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/ctsj-index/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="PWA">
+    <option name="enabled" value="true" />
+    <option name="wasEnabledAtLeastOnce" value="true" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

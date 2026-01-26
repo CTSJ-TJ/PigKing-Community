@@ -7,17 +7,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ctsj-index" />
+        <module name="ctsj-login" />
+        <module name="ctsj-myai" />
         <module name="ctsj-eureka" />
         <module name="ctsj-main" />
+        <module name="ctsj-gateway" />
+        <module name="ctsj-admin" />
+        <module name="ctsj-amuse" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ctsj-admin" options="-parameters" />
+      <module name="ctsj-amuse" options="-parameters" />
       <module name="ctsj-eureka" options="-parameters" />
-      <module name="ctsj-index" options="-parameters" />
+      <module name="ctsj-gateway" options="-parameters" />
+      <module name="ctsj-login" options="" />
       <module name="ctsj-main" options="-parameters" />
+      <module name="ctsj-myai" options="-parameters" />
     </option>
   </component>
 </project>

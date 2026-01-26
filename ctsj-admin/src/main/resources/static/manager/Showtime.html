@@ -50,8 +50,10 @@
 <body>
 <div id="app" class="blog-view-container">
   <div>
-    <button @click="pass()" class="btn btn-approve">审核通过</button>
-    <button @click="passover()" class="btn btn-reject">审核不通过</button>
+    <button @click="pass()" v-show="showstart" class="btn btn-approve">审核通过</button>
+    <button @click="passover()"  v-show="showstart" class="btn btn-reject">审核不通过</button>
+    <button @click="passover()"  v-show="!showsbin" class="btn btn-reject">禁用</button>
+    <button @click="pass()"  v-show="!showspass" class="btn btn-approve">解除禁用</button>
   </div>
   <div class="title">{{ title }}</div>
   <div v-html="htmlContent" class="contents"></div>
@@ -64,7 +66,12 @@
     el: '#app',
     data: {
       title: '这是标题',
-      postContent: '# 这是内容\n\n这是一段普通的文本。'
+      postContent: '# 这是内容\n\n这是一段普通的文本。',
+      showstart: true,
+      showsbin: true,
+      showspass: true,
+      midvalue:0,
+      postid: 0
     },
     computed: {
       htmlContent: function () {
@@ -73,20 +80,45 @@
     },
     methods:{
       findId(){
-        let data = localStorage.getItem('postid');
-        // alert("show:"+data);
-        // 请求：127.0.0.1:8888/post/findId?postid=5
-        axios.post("../post/findId?postid="+data).then(response=>{
+        this.postid = localStorage.getItem('postid');
+        let status=localStorage.getItem('status');
+        // alert("show:"+status);
+        if (status==0){
+        }else if(status==1){
+          this.showstart=!this.showstart;
+          this.showsbin=!this.showsbin;
+        }else if(status==2){
+          this.showstart=!this.showstart;
+          this.showspass=!this.showspass;
+        }
+        axios.post("../post/findId?postid="+this.postid).then(response=>{
              console.log(response.data)
           this.title=response.data.posttitle;
           this.postContent=response.data.postpassege;
         });
       },
       pass(){
-        alert("通过！！");
+        //设置为1
+        this.midvalue=1;
+        this.pushed();
       },
       passover(){
-        alert("不通过!!!");
+        //设置为2
+        this.midvalue=2;
+        this.pushed();
+      },
+      pushed:function (){
+        axios.get("../post/modify",{
+          params:{postid:this.postid,status: this.midvalue}
+        }).then(result=>{
+            // alert(JSON.stringify(result.data));
+            if (result.data>0){
+              alert("操作成功！！！");
+            }else{
+              alert("操作失败！！！");
+            }
+            document.location.href="Posts.html";
+        });
       }
     },
     mounted(){

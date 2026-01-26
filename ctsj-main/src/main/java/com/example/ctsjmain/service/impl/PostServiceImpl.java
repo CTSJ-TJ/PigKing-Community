@@ -20,6 +20,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Posts> finduser(String userid){
+        return postMapper.finduser(userid);
+    }
+
+    @Override
     public List<Posts> findlike(String status,String likestring){
         return postMapper.findlike(status,likestring);
     }
@@ -32,6 +37,22 @@ public class PostServiceImpl implements PostService {
     @Override
     public int addpost(Posts posts){
         return postMapper.addpost(posts);
+    }
+
+    @Override
+    public int modify(Posts posts){
+        if(posts.getPostlikes()!=null){
+             return postMapper.modifylike(posts);
+        }else if(posts.getCollections()!=null){
+              return postMapper.modifycollect(posts);
+        }else {
+            return -1;
+        }
+    }
+
+    @Override
+    public int modstatus(Posts posts){
+        return postMapper.modstatus(posts);
     }
 
 }

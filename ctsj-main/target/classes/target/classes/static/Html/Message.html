@@ -289,10 +289,11 @@
                 });
             },
             findfriend(){
-                axios.get("../user/findfriend",{
+                axios.get("../friend/findfriend",{
                     params: {myid: this.myid}
                 }).then(response=>{
                     mydata=response.data;
+                    console.log("private:"+JSON.stringify(mydata))
                     //数据前端处理
                     let myId = this.myid;
                     let result = mydata.map(item => {

@@ -1,6 +1,5 @@
 package com.example.ctsjmain.service.impl;
 
-import com.example.ctsjmain.entity.Friends;
 import com.example.ctsjmain.entity.User;
 import com.example.ctsjmain.mapper.UserMapper;
 import com.example.ctsjmain.service.UserService;
@@ -19,13 +18,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.login(user);
     }
 
-    @Override
-    public List<Friends> findfriend(String myid) {
-        return userMapper.findfriend(myid);
-    }
 
     @Override
     public int add(User user){
         return userMapper.add(user);
+    }
+
+    @Override
+    public List<User> find(String values){
+        return userMapper.find(values);
+
     }
 }

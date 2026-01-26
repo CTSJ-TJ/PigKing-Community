@@ -30,14 +30,15 @@ spring:
         - id: route1
           uri: lb://ctsj-myai
           predicates:
-            - Path=/emotion/**
+            - Path=/myai/**
         - id: route2
           uri: lb://ctsj-amuse
           predicates:
             - Path=/status/**
-
-
-
+        - id: route2
+          uri: lb://ctsj-amuse
+          predicates:
+            - Path=/friend/**
 
 
 # 映射文件位置
@@ -52,7 +53,6 @@ mybatis:
 logging:
   level:
     org.mybatis: DEBUG
-
 
 
 ---

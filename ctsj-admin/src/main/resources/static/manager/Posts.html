@@ -180,6 +180,7 @@
 				let ids=this.postid[i-1];
 				document.location.href="Showtime.html";
 				localStorage.setItem('postid', ids);
+				localStorage.setItem('status', this.status);
 			},
 			finaAll(){
 				axios.get("../post/findall?status="+this.status).then(response=>{
@@ -197,7 +198,7 @@
 				});
 			},
 			showAlert() {
-				alert('你搜索的内容是: ' + this.searchText);
+				// alert('你搜索的内容是: ' + this.searchText);
 				var path="../post/findlike?status="+this.status+"&like="+this.searchText
 				axios.get(path).then(response=>{
 					this.cleans();

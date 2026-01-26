@@ -27,16 +27,30 @@
         .add-friend-form {
             margin-bottom: 20px;
         }
-        .add-friend-form input[type="text"] {
+        .add-friend-form .search-container {
+            display: flex;
             width: 100%;
-            padding: 10px;
             margin-bottom: 10px;
+        }
+        .add-friend-form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
+            margin-right: 10px; /* 添加间隙 */
         }
-        .add-friend-form button {
-            padding: 10px 20px;
+        .add-friend-form .search-button {
+            padding: 10px;
             background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            flex-basis: 100px; /* 控制按钮宽度 */
+        }
+        .add-friend-form .add-button {
+            padding: 10px 20px;
+            background-color: #28a745; /* 修改按钮颜色 */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -65,18 +79,25 @@
         }
     </style>
     <script src="../js/vue.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
 </head>
 <body>
 <div id="app">
     <div class="add-friend-form">
         <h2>添加好友</h2>
-        <input type="text" v-model="query" placeholder="输入好友的用户名">
-        <button @click="search">添加</button>
+        <div class="search-container">
+            <input type="text" v-model="query" placeholder="输入用户名或ID">
+            <button class="search-button" @click="search">搜索</button>
+        </div>
+        <button class="add-button" @click="add">添加</button>
     </div>
+
     <div class="search-results">
         <h2>搜索结果</h2>
         <ul id="results">
-            <li v-for="result in results" :key="result">{{ result }}</li>
+            <li v-for="result in friends" :key="result.id" @click="find(result)">
+                {{result.username}}
+            </li>
         </ul>
     </div>
 </div>
@@ -86,17 +107,46 @@
         data() {
             return {
                 query: '',
-                results: []
+                friends: [],
+                myname:'',
+                myid :0,
+                otherid:0,
+                othername: ''
             }
         },
         methods: {
-            search() {
-                setTimeout(() => {
-                    this.results = ['结果1', '结果2', '结果3',, '结果2', '结果3', '结果2', '结果3', '结果2', '结果3'];
-                }, 1000);
+            search:function () {
+                axios.get("../user/find?values="+this.query).then(response=>{
+
+                    this.friends=response.data;
+                });
+            },
+            find:function (result){
+                this.query=result.username;
+                // alert(result.username+","+result.userid)
+                this.otherid=result.userid;
+                this.othername=result.username;
+            },
+            add:function (){
+                alert(this.myid+","+this.myname);
+                axios.get("../friend/addfriend",{
+                   params:{myid:this.myid,myname:this.myname,otherid:this.otherid,othername:this.othername}
+                }).then(response=>{
+                    // alert(JSON.stringify(response.data));
+                    let math=response.data;
+                    if(math==-1){
+                        alert("已经添加！！！");
+                    }else if(math==0){
+                        alert("添加失败！！！");
+                    }else{
+                        alert("添加成功！！！");
+                    }
+                })
             }
         },
         mounted(){
+            this.myid=localStorage.getItem("myid");
+            this.myname=localStorage.getItem("myname");
         }
     });
 </script>

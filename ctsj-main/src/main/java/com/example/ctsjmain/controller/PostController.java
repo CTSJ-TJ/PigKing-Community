@@ -36,15 +36,18 @@ public class PostController{
         return postService.findlike(status,likestring);
     }
 
+    @RequestMapping("finduser")
+    @ResponseBody
+    public Object finduser(@RequestParam("userid") String userid){
+         return postService.finduser(userid);
+    }
+
     @RequestMapping("findId")
     @ResponseBody
     public Object getPost(@RequestParam("postid") String postId){
         System.out.println("the postid:"+postId);
-        System.out.println("who:"+postService.findId(postId).toString());
         return postService.findId(postId);
     }
-
-
 
     @RequestMapping(value = "addpost", method = RequestMethod.POST)
     @ResponseBody
@@ -55,7 +58,31 @@ public class PostController{
         return result;
     }
 
+    @RequestMapping("modify")
+    @ResponseBody
+    public int modify(@RequestParam("postid") String postId,
+                         @RequestParam(required = false) String click, @RequestParam(required = false) String collect){
+        Posts posts=new Posts();
+        posts.setPostid(Integer.valueOf(postId));
+        if(click!=null){
+           posts.setPostlikes(Integer.valueOf(click));
+        }else if(collect!=null){
+            posts.setCollections(Integer.valueOf(collect));
+        }
+        System.out.println("the postid:"+postId);
+        int a=postService.modify(posts);
+        System.out.println("hte a:"+a);
+        return a;
+    }
 
+    @RequestMapping("modstus")
+    @ResponseBody
+    public int modstus(@RequestParam("postid") String postId,@RequestParam("status") String value){
+        Posts posts=new Posts();
+        posts.setPostid(Integer.valueOf(postId));
+        posts.setStatus(Integer.valueOf(value));
+       return postService.modstatus(posts);
+    }
 
     @RequestMapping("gateway")
     public String user(){
@@ -63,10 +90,11 @@ public class PostController{
                 "http://ctsj-gateway/",
                 String.class);
     }
-
     @RequestMapping("show")
     String show(){
         return "Showtime.html";
     }
+
+
 
 }

@@ -2,10 +2,8 @@ package Test;
 
 import com.hankcs.hanlp.restful.HanLPClient;
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class Test02 {
     public static void main(String[] args) throws IOException {
@@ -45,7 +43,19 @@ public class Test02 {
         //
         Map<String,Double> map=HanLP.keyphraseExtraction("自然语言处理是一门博大精深的学科，掌握理论才能发挥出HanLP的全部性能。《自然语言处理入门》是一本配套HanLP的NLP入门书，助你零起点上手自然语言处理。",3);
         for (Map.Entry<String, Double> entry : map.entrySet()) {
-            System.out.println("Category: " + entry.getKey() + ", Probability: " + entry.getValue());
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+
+        Map<String,String> map1 = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("0.00");
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            Double percentage = entry.getValue() * 100;
+            System.out.println(entry.getKey() + ":" + df.format(percentage) + "%");
+            map1.put(entry.getKey(), df.format(percentage) + "%");
+        }
+
+        for (Map.Entry<String, String> entry : map1.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
 }

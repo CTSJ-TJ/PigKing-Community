@@ -401,6 +401,7 @@
                            let code=result.data;
                            if(code==1){
                              localStorage.setItem("myid",userid);
+                             localStorage.setItem("myname",username);
                              document.location.href='Html/Testmain.html';
                            }else{
                              alert("登录失败！！！");
@@ -430,7 +431,7 @@
                 let name=response.data.data.adminname;
                 let id=response.data.data.adminid;
                 axios.get("../admin/toadmin",{params:{adminid: id ,adminname: name}}).then(response => {
-                  alert(JSON.stringify(response.data));
+                  // alert(JSON.stringify(response.data));
                        window.location.href=response.data
                 });
               }

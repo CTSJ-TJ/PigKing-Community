@@ -23,7 +23,6 @@ public class AdminAcation {
             admin.setAdminid(Integer.parseInt(adminid));
             admin.setAdminname(adminname);
             redisTemplate.opsForValue().set("admin", admin);
-            System.out.println("admin: welcome my wg!!");
             return "yes";
         }else {
             return "no";

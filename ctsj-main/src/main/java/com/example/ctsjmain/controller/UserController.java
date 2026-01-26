@@ -11,6 +11,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,12 +60,6 @@ public class UserController {
         });
     }
 
-    @RequestMapping("findfriend")
-    @ResponseBody
-    public Object FrindFriend(@RequestParam("myid") String myId){
-        System.out.println("myid="+myId);
-         return userService.findfriend(myId);
-    }
 
     @RequestMapping("setuser")
     @ResponseBody
@@ -134,5 +129,10 @@ public class UserController {
         });
     }
 
+    @RequestMapping("find")
+    @ResponseBody
+    public List<User> find(@RequestParam("values") String values){
+         return userService.find(values);
+    }
 
 }

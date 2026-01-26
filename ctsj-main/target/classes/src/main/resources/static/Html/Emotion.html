@@ -93,7 +93,7 @@
       },
       submit() {
         // alert(this.inputContent);
-        axios.get("../emotion",{
+        axios.get("../myai/emotion",{
           params:{texts: this.inputContent}
         }).then(response=>{
            // alert(JSON.stringify(response.data));

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>模仿CSDN个人主页</title>
+    <title>个人主页</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,6 +60,13 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .article p {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <!--引入相关的文件-->
@@ -74,14 +81,14 @@
             </div>
             <div class="sidebar">
                 <h2>个人信息</h2>
-                <p>姓名：张三</p>
-                <p>职业：前端开发</p>
+                <p>姓名：{{myname}}</p>
+                <p>ID：{{myid}}</p>
             </div>
             <div class="content">
                 <h2>我的文章</h2>
                 <div class="article" v-for="article in articles">
-                    <h3>{{ article.title }}</h3>
-                    <p>{{ article.content }}</p>
+                    <h3>{{ article.posttitle }}</h3>
+                    <p>{{ article.postpassege }}</p>
                 </div>
             </div>
     </div>
@@ -91,23 +98,22 @@
         data: {
             articles: [
                 { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
-                { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' },
-                { title: '文章1：如何使用React.js', content: '这是一篇关于如何使用React.js的文章...' },
                 { title: '文章2：Vue.js入门指南', content: '这是一篇关于Vue.js入门指南的文章...' }
-            ]
-        }
+            ],
+            myid:0,
+            myname:''
+        },
+        mounted() {
+            this.myid=localStorage.getItem("myid");
+            this.myname=localStorage.getItem("myname");
+            axios.get("../post/finduser?userid="+this.myid).then(response=>{
+                // console.log("postu:"+JSON.stringify(response.data));
+                this.articles=response.data;
+            });
+        },
+        methods: {
+
+        },
     });
 </script>
 </body>

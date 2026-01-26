@@ -109,6 +109,7 @@
             <artifactId>spring-boot-starter-redis</artifactId>
             <version>1.4.6.RELEASE</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

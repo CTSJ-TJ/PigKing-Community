@@ -21,11 +21,15 @@ public class StatuaServiceimpl implements IStatusService {
          Clickcollect entity=statusMapper.findstatus(clickcollect);
          if(entity==null){
              map.put("code",0);
+             int a=statusMapper.add(clickcollect);
+             System.out.println("this ia a:"+a);
              return map;
          }else{
              Integer click=entity.getClickstatus();
              Integer collect=entity.getCollectstatus();
-             if(click==1&&collect!=1){
+             if(click==0&&collect==0){
+                 map.put("code",0);
+             } else if(click==1&&collect!=1){
                  map.put("code",1);
              }else if(click!=1&&collect==1){
                  map.put("code",2);
@@ -35,4 +39,16 @@ public class StatuaServiceimpl implements IStatusService {
              return map;
          }
     }
+
+    @Override
+    public int modify(Clickcollect entity){
+        if(entity.getCollectstatus()!=null){
+             return statusMapper.modifycollect(entity);
+        }else if(entity.getClickstatus()!=null){
+             return statusMapper.modifyclick(entity);
+        }else {
+            return -1;
+        }
+    }
+
 }

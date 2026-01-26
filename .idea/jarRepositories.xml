@@ -7,6 +7,21 @@
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="aliyun" />
+      <option name="name" value="aliyun" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central1" />
+      <option name="name" value="central1" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="spring-milestones" />
       <option name="name" value="spring-milestones" />
       <option name="url" value="https://maven.aliyun.com/repository/public" />
@@ -22,18 +37,13 @@
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="spring-snapshots" />
-      <option name="name" value="spring-snapshots" />
+      <option name="id" value="microsoft" />
+      <option name="name" value="microsoft" />
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Maven Central repository" />
-      <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="aliyun" />
-      <option name="name" value="aliyun" />
+      <option name="id" value="spring-snapshots" />
+      <option name="name" value="spring-snapshots" />
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>
@@ -49,11 +59,6 @@
     <remote-repository>
       <option name="id" value="redhat" />
       <option name="name" value="redhat" />
-      <option name="url" value="https://maven.aliyun.com/repository/public" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="central1" />
-      <option name="name" value="central1" />
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>

@@ -8,4 +8,5 @@ import java.util.Map;
 
 public interface IStatusService {
    Map findstatus(Clickcollect clickcollect);
+   int modify(Clickcollect clickcollect);
 }

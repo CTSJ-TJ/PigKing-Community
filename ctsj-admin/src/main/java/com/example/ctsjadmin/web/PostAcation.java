@@ -35,4 +35,11 @@ public class PostAcation {
                 String.class);
     }
 
+    @RequestMapping("modify")
+    public Object modify(@RequestParam("postid") String postId,@RequestParam("status") String value){
+        return restTemplate.getForObject(
+                "http://ctsj-main/post/modstus?postid="+postId+"&status="+value,
+                String.class);
+    }
+
 }

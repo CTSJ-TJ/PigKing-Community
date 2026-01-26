@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <style>
-    #app{
-      /*border: 2px red solid;*/
-    }
     #inputBox {
       margin-left: 10%;
       width: 80%;
@@ -27,7 +24,29 @@
     #submitButton:hover {
       background-color: #45a049;
     }
+    #selectmath{
+      margin-left: 10%;
+      font-size: 17px;
+    }
 
+    #tableContainer {
+      margin-top: 40px;
+      margin-left: 10%;
+      width: 80%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: blue;
+      color: white;
+    }
   </style>
 </head>
 <script src="../js/vue.js"></script>
@@ -39,28 +58,55 @@
     <h3 style="margin-left: 10%">请输入一段中文文本：</h3>
   </div>
   <div id="inputBox" contenteditable="true" @input="updateContent"></div>
+  <div id="selectmath">
+    提取数：<input id="numberInput" type="number" min="1" max="100" v-model="number">
+  </div>
   <button id="submitButton" @click="submit">提取</button>
+  <div id="tableContainer" v-show="!showstart">
+    <table>
+      <tr>
+        <th>关键词短语</th>
+        <th>权重</th>
+      </tr>
+      <template v-for="item in result">
+        <tr v-for="(value, key) in item">
+          <td >{{ key }}</td>
+          <td >{{ value }}</td>
+        </tr>
+      </template>
+    </table>
+  </div>
 </div>
-
 <script>
   new Vue({
     el: '#app',
     data() {
       return {
         inputContent: '',
-        gauge: null  // 添加这一行
+        gauge: null  ,
+        result:[{"存储过程的名字":"58.65%","存储过程":"90.41%","MySQL的存储过程":"61.49%"}],
+        number: 3,
+        showstart:true
       }
     },
-    mounted() {  // 添加这个方法
-
+    mounted() {
     },
     methods: {
       updateContent(e) {
         this.inputContent = e.target.innerText;
       },
       submit() {
-        alert(this.inputContent);
-        var numbers = 0.2;  // 这是你的情感分析结果
+        // this.showstart=!this.showstart;
+        // this.result=[{"类的唯一实例":"38.87%","成员变量":"66.30%","静态成员变量":"92.43%"}];
+        axios.get("../myai/keyword",{
+          params:{texts:this.inputContent,math:this.number}
+        }).then(response=>{
+            alert(JSON.stringify(response.data));
+            // this.showstart=!this.showstart;
+            this.result=response.data;
+            Vue.set(this, 'showstart', !this.showstart);
+            console.log("whu:"+JSON.stringify(this.result));
+        });
       }
     }
   });

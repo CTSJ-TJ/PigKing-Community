@@ -2,6 +2,7 @@ package com.example.ctsjmain.controller;
 
 import com.example.ctsjmain.entity.Messages;
 import com.example.ctsjmain.service.MessageService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,25 +29,23 @@ public class ExchangeController {
     RestTemplate restTemplate;
 
     @RequestMapping("chat")
-    @SendTo("/topic/messages")
     @ResponseBody
     public List<Messages> findinteract(@RequestParam("myid") String myid, @RequestParam("otherid") String otherid){
-        System.out.println("myid="+myid+",otherid="+otherid);
-        System.out.println("msg:"+messageService.findinteract(myid,otherid).toString());
         return messageService.findinteract(myid,otherid);
     }
+
     @RequestMapping("addchat")
     @SendTo("/topic/messages")
     @ResponseBody
     public int addchat(Messages messages){
-        System.out.println(messages.getContent());
-        System.out.println(messages.getSenderid());
-        System.out.println(messages.getSendername());
-        System.out.println(messages.getReceiverid());
         int result = messageService.addchat(messages);
-        this.template.convertAndSend("/topic/updates", messages);
+        this.template.convertAndSend("/topic/messages", messages);
         return result;
     }
 
+//    @RabbitListener(queues = "/topic/messages")
+//    public void receiveMessage(String message) {
+//        System.out.println("Received message: " + message);
+//    }
 
 }

@@ -15,6 +15,15 @@
       overflow-y: scroll;
       margin-bottom: 10px;
     }
+    #contentBox{
+      margin-left: 10%;
+      width: 80%;
+      padding: 10px;
+      /*overflow-y: scroll;*/
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 40px;
+    }
     #submitButton {
       margin-left: 80%;
       padding: 10px 20px;
@@ -40,6 +49,13 @@
   </div>
   <div id="inputBox" contenteditable="true" @input="updateContent"></div>
   <button id="submitButton" @click="submit">生成摘要</button>
+  <div v-show="!showstart">
+      <h3 style="margin-left: 10%">结果：</h3>
+      <div id="contentBox" contenteditable="true">
+        {{ content }}
+      </div>
+  </div>
+
 </div>
 
 <script>
@@ -48,19 +64,25 @@
     data() {
       return {
         inputContent: '',
-        gauge: null  // 添加这一行
+        gauge: null,
+        content:'你好呀！！！',
+        showstart:true
       }
     },
-    mounted() {  // 添加这个方法
-
+    mounted() {
     },
     methods: {
       updateContent(e) {
         this.inputContent = e.target.innerText;
       },
       submit() {
-        alert(this.inputContent);
-        var numbers = 0.2;  // 这是你的情感分析结果
+        // alert(this.inputContent);
+        axios.get("../myai/abstract?texts="+this.inputContent).then(response=>{
+            // alert(JSON.stringify(response.data));
+            this.content=response.data;
+            this.showstart=!this.showstart;
+        })
+
       }
     }
   });

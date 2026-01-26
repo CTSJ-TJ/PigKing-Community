@@ -2,6 +2,7 @@ package com.example.ctsjmain.controller;
 
 import com.example.ctsjmain.entity.Admin;
 import com.example.ctsjmain.service.AdminService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class AdminController {
     AdminService adminService;
 
     @GetMapping("login")
+    @HystrixCommand(fallbackMethod = "fallbackOrder")
     public Mono<ResponseEntity<Map<String, Object>>> show(ServerWebExchange exchange) {
         return exchange.getSession().flatMap(session -> {
             Object attribute = session.getAttribute("verityCode");
@@ -37,8 +39,6 @@ public class AdminController {
                 String adminname = exchange.getRequest().getQueryParams().getFirst("adminname");
                 String adminpwd = exchange.getRequest().getQueryParams().getFirst("adminpwd");
                 String usafe = exchange.getRequest().getQueryParams().getFirst("usafe");
-                System.out.println("自动生成：" + vericode);
-                System.out.println("安全码: " + usafe);
                 Map<String, Object> map = new HashMap<>();
                 if (!vericode.equals(usafe)) {
                     map.put("code", "66");
@@ -57,7 +57,6 @@ public class AdminController {
                     return Mono.just(ResponseEntity.ok(map));
                 }
             } else {
-                // Handle the case where attribute is not a String
                 Map<String, Object> map = new HashMap<>();
                 map.put("code", "99");
                 map.put("message", "verityCode is not a string");
@@ -67,6 +66,7 @@ public class AdminController {
     }
 
     @GetMapping("toadmin")
+    @HystrixCommand(fallbackMethod = "fallbackOrder")
     public Mono<String> order(@RequestParam("adminid") String adminid, @RequestParam("adminname") String adminname){
         String path1 = "http://ctsj-admin/identity?adminid=" + adminid + "&adminname=" + adminname;
         return webClient.get()
@@ -74,7 +74,6 @@ public class AdminController {
                 .retrieve()
                 .bodyToMono(String.class)
                 .flatMap(result1 -> {
-                    System.out.println("the:"+result1);
                     if ("yes".equals(result1)) {
                         return webClient.get()
                                 .uri("http://ctsj-gateway/yyds")
@@ -86,16 +85,8 @@ public class AdminController {
                 });
     }
 
-//    @RequestMapping("toadmin")
-//    @ResponseBody
-//    public String order(@RequestParam("adminid") String adminid, @RequestParam("adminname") String adminname){
-//        String ptah1="http://ctsj-admin/identity?adminid="+adminid+"&adminname="+adminname;
-//        String result1=restTemplate.getForObject(ptah1, String.class);
-//        System.out.println("reul1:"+result1);
-//        String result2=restTemplate.getForObject(
-//                "http://ctsj-gateway/yyds",
-//                String.class);
-//        System.out.println("who:"+result2);
-//        return  result2;
-//    }
+    public Mono<String> fallbackOrder(String adminid, String adminname) {
+        return Mono.just("系统繁忙，请稍后再试");
+    }
+
 }

@@ -47,7 +47,6 @@
                     <span id="name" style="font-family: 华文新魏">{{username}}</span>
                     <button  id="myButton" @click="login()" style="margin-right: 0px; background-color: firebrick; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; transition-duration: 0.4s;">登录/注册</button>
                     <button  id="myButton1" @click="exits()" style="margin-right: 0px; background-color: firebrick; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; transition-duration: 0.4s;">退出登录</button>
-
 					</span>
 				</el-header>
 				</el-header>
@@ -75,11 +74,12 @@
 								<template slot="title"><i class="el-icon-location"></i>休闲娱乐</template>
 								<el-menu-item index="3-2" @click="changePages(8)">社区影院</el-menu-item>
 							</el-submenu>
-
 							<el-submenu index="6">
 								<template slot="title"><i class="el-icon-user"></i>个人中心</template>
 								<el-menu-item index="3-1" @click="changePages(3)">个人首页</el-menu-item>
 								<el-menu-item index="3-2" @click="changePages(9)">信息修改</el-menu-item>
+<!--								<el-menu-item index="3-2" @click="changePages(14)">我的收藏</el-menu-item>-->
+<!--								<el-menu-item index="3-2" @click="changePages(15)">浏览历史</el-menu-item>-->
 							</el-submenu>
 							<el-menu-item index="7" @click="changePages(10)"><i class="el-icon-setting"></i>关于社区</el-menu-item>
 						</el-menu>
@@ -101,13 +101,14 @@
 				methods: {
 					changePages:function(i){
 						if(i == 1){
+							// window.history.back();
 							this.mainsrc = "MySource.html";
 						} else if(i == 2){
 							this.mainsrc = "Editor.html";
 						} else if(i == 3){
 							this.mainsrc = "Pensonal.html";
 						} else if(i == 4){
-							this.mainsrc = "Study04.html";
+							this.mainsrc = "Report.html";
 						} else if(i == 5){
 							this.mainsrc = "Message.html";
 						} else if(i == 6){
@@ -119,13 +120,17 @@
 						}else if(i==9){
 							this.mainsrc = "Modify.html"
 						}else if(i==10){
-							this.mainsrc = "Study10.html"
+							this.mainsrc = "Background.html"
 						}else if(i==11){
 							this.mainsrc = "Emotion.html"
 						}else if(i==12){
 							this.mainsrc = "Keywords.html"
 						}else if(i==13){
 							this.mainsrc = "Emotion.html"
+						}else if(i==14){
+							this.mainsrc = "Mycollect.html"
+						}else if(i==15){
+							this.mainsrc = "History.html"
 						}
 					},
 					login:function(){

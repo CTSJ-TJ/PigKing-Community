@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ctsjamuse.mapper.FriendMapper">
+    <select id="findfriend" parameterType="string" resultType="com.example.ctsjamuse.entity.Friends">
+        select * from friends where friendxid=#{myid} or friendyid=#{myid};
+    </select>
+
+    <insert id="addfriend" parameterType="com.example.ctsjamuse.entity.Friends" useGeneratedKeys="true">
+        insert into friends values(null,#{friendxid},#{friendxname},#{friendyid},#{friendyname},1)
+    </insert>
+
+    <select id="friendship" parameterType="com.example.ctsjamuse.entity.Friends" resultType="com.example.ctsjamuse.entity.Friends">
+        select * from friends where (friendxid=#{friendxid} and friendyid=#{friendyid})
+                                 or (friendxid=#{friendyid} and friendyid=#{friendxid})
+    </select>
+</mapper>

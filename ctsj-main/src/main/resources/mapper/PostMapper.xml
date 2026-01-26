@@ -7,6 +7,10 @@
         select * from mypost where status=#{status} order by posttime DESC
     </select>
 
+    <select id="finduser" parameterType="string" resultType="com.example.ctsjmain.entity.Posts">
+        select * from mypost  where userid=#{userid} order by posttime DESC;
+    </select>
+
     <select id="findlike" parameterType="string" resultType="com.example.ctsjmain.entity.Posts">
         select * from mypost where status=#{status} and (posttitle like "%"#{likestring}"%" or postpassege like "%"#{likestring}"%")
                              order by posttime DESC
@@ -20,5 +24,19 @@
     <insert id="addpost" parameterType="com.example.ctsjmain.entity.Posts" useGeneratedKeys="true">
           insert into mypost values(null,#{posttitle},#{postpassege},#{userid},curdate(),0,0,0)
     </insert>
+
+    <update id="modifylike" parameterType="com.example.ctsjmain.entity.Posts">
+        update mypost set postlikes=postlikes+#{postlikes} where postid=#{postid}
+    </update>
+
+    <update id="modifycollect" parameterType="com.example.ctsjmain.entity.Posts">
+        update mypost set collections=collections+#{collections} where postid=#{postid}
+    </update>
+
+    <update id="modstatus" parameterType="com.example.ctsjmain.entity.Posts">
+        update mypost set status =#{status} where postid=#{postid}
+    </update>
+
+
 </mapper>
 

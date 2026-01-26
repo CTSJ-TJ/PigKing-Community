@@ -160,14 +160,32 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+
         <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>portable-1.8.4</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+            <version>3.2.2</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.sqlserver</groupId>-->
+<!--            <artifactId>mssql-jdbc</artifactId>-->
+<!--            <version>13.2.0.jre8</version>-->
+<!--        </dependency>-->
+
+
 
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>microsoft</id>
+            <url>https://maven.microsoft.com/releases/</url>
+        </repository>
+    </repositories>
+
+
 
     <dependencyManagement>
         <dependencies>
@@ -199,5 +217,7 @@
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>

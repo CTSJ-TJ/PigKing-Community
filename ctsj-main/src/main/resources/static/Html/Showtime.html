@@ -66,7 +66,26 @@
       margin-top: 10px;
       padding: 5px 10px;
     }
-
+    #backButton {
+      background-color: #f0f0f0; /* Green */
+      border: none;
+      color: black;
+      padding: 10px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 12px;
+      transition-duration: 0.4s; /* transition effect */
+      margin-bottom: 20px;
+    }
+    #backButton:hover {
+      background-color: white; /* White */
+      color: black; /* Black text */
+      border: 2px solid #4CAF50; /* Green border */
+    }
   </style>
 </head>
 <script src="../js/jquery-3.4.1.min.js"></script>
@@ -77,6 +96,7 @@
 <body>
 <div id="app">
   <div class="blog-view-container">
+    <button id="backButton" @click="goBack">返回</button>
     <div class="title">{{ title }}</div>
     <div v-html="htmlContent" class="content"></div>
     <ul class="bottoms" style="display: flex; justify-content: flex-end; list-style-type: none;">
@@ -120,10 +140,12 @@
       showStart1: true,
       clicks:20,
       collects:10,
+      myid:[],
+      postid:[],
       observes: [
-              {"id":1,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
-              {"id":2,"postid":2,"username":"伟哥", "lastId": 1,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
-              {"id":3,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+              // {"id":1,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+              // {"id":2,"postid":2,"username":"伟哥", "lastId": 1,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
+              // {"id":3,"postid":2,"username":"伟哥", "lastId": null,"observeContent": "你好","createDate": "2020-05-13 12:01:24"},
       ],
       newComment:''
     },
@@ -134,17 +156,17 @@
     },
     methods:{
       findId(){
-        var postid = localStorage.getItem('postid');
-        var myid=localStorage.getItem("myid");
-        axios.post("../post/findId?postid="+postid).then(response=>{
+        this.postid = localStorage.getItem('postid');
+        this.myid=localStorage.getItem("myid");
+        axios.post("../post/findId?postid="+this.postid).then(response=>{
              console.log(response.data)
           this.title=response.data.posttitle;
           this.postContent=response.data.postpassege;
           this.clicks=response.data.postlikes
           this.collects=response.data.collections;
-          var path="../status/findstatus?userid="+myid+"&postid="+postid;
+          var path="../status/findstatus?userid="+this.myid+"&postid="+this.postid;
           axios.get(path).then(result=>{
-             var code=result.data.code
+             var code=result.data.code;
              if (code==1){
                this.showStart = !this.showStart;
              }else if(code==2){
@@ -158,28 +180,74 @@
         });
       },
       toggleImage: function() {
-        this.showStart = !this.showStart;
-        var math=0;
-        if(this.showStart){
-          this.clicks-=1;
+        // this.showStart = !this.showStart;
+        let math=0;
+        if(!this.showStart){
+          // this.clicks-=1;
           math=-1;
         }else{
-          this.clicks+=1;
+          // this.clicks+=1;
           math=1;
         }
-      },
-      toggleImage1: function() {
-        this.showStart1 = !this.showStart1;
+        let path="../status/modify?userid="+this.myid+"&postid="+this.postid+"&click="+math;
+        axios.get(path).then(result=>{
+          var a=result.data;
+          if(a==-2){
+            alert("操作过于频繁！！！");
+          }else if(a==-1){
+            alert("请求无效！！！");
+          }else{
+            let path1="../post/modify?postid="+this.postid+"&click="+math;
+            axios.get(path1).then(rst=>{
+              var a1=rst.data;
+              if(a1<1){
+                alert("数据出错了！！");
+              }else {
+                this.showStart = !this.showStart;
+                if(math>0){
+                  this.clicks+=1;
+                }else {
+                  this.clicks-=1;
+                }
+              }
+            });
+          }
+        });
 
+      },
+      toggleImage1: function(){
+        let math=0;
+        this.showStart1 = !this.showStart1;
         if(this.showStart1){
           this.collects-=1;
+          math=-1;
         }else{
           this.collects+=1;
+          math=1;
         }
-
+        let path="../status/modify?userid="+this.myid+"&postid="+this.postid+"&collect="+math;
+        axios.get(path).then(result=>{
+          var a=result.data;
+          if(a==-2){
+            alert("操作过于频繁！！！");
+          }else if(a==-1){
+            alert("请求无效！！！");
+          }else{
+            let path1="../post/modify?postid="+this.postid+"&collect="+math;
+            axios.get(path1).then(rst=>{
+              var a1=rst.data;
+              if(a1<1){
+                alert("数据出错了！！");
+              }
+            });
+          }
+        });
       },
       submitComment:function() {
        alert("点击了");
+      },
+      goBack:function (){
+        document.location.href="MySource.html";
       }
     },
     mounted(){
