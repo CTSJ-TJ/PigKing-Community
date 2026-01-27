@@ -1,7 +1,7 @@
 </p>
-<p align="center">
-  
-</p>
+<h2 align="center">
+  PigKing 技术论坛系统
+</h2>
 
 <p align="center">
 
@@ -16,7 +16,7 @@
 <img src="https://gitcode.com/GoView/go-view/star/badge.svg" style="display: inline-block; position: relative; top: 4px;">
 </h4>
 
-#### 长期赞助商
+#### 项目介绍
 
 <div>
   
@@ -26,7 +26,7 @@
 
 #### 👻 携带 **后端** 请求分支: **`master-fetch`**
 
-#### 📚 GoView **文档** 地址：[https://www.mtruning.club/](https://www.mtruning.club/)
+#### 📚 PigKing-Foot **文档** 地址：[https://www.mtruning.club/](https://www.mtruning.club/)
 
 项目纯前端-Demo 地址：[https://vue.mtruning.club/](https://vue.mtruning.club/)
 
@@ -146,12 +146,12 @@ Cloud IDE 代码在线预览地址：[https://idegitee.com/dromara/go-view](http
 
 ## 交流群
 
-QQ 群：687586375
+QQ 群：596495975
 
 <img width="260px" src="readme/go-view-qq.jpg" alt="QQ群" style="border-radius: 20px" />
 
-## Pro 部分功能展示
+## PigKing Pro 部分功能展示
 
-体验地址： <a href="https://ai.goviewlink.com/saas/" target="_blank">https://ai.goviewlink.com/saas/</a>
+体验地址： <a href="https://ai.goviewlink.com/saas/" target="_blank">正在开发中...</a>
 
 ![渲染海报](readme/logo-poster.png)

@@ -24,7 +24,7 @@
       <module name="ctsj-amuse" options="-parameters" />
       <module name="ctsj-eureka" options="-parameters" />
       <module name="ctsj-gateway" options="-parameters" />
-      <module name="ctsj-login" options="" />
+      <module name="ctsj-login" options="-parameters" />
       <module name="ctsj-main" options="-parameters" />
       <module name="ctsj-myai" options="-parameters" />
     </option>

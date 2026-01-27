@@ -12,6 +12,9 @@ spring:
     name: ctsj-gateway
   main:
     web-application-type: reactive
+  redis:
+    host: 127.0.0.1
+    port: 6379
   cloud:
     gateway:
       routes:

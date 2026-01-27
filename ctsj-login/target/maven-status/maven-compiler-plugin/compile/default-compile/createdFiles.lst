@@ -1,4 +1,6 @@
+com\example\ctsjlogin\CtsjLoginApplication.class
 com\example\ctsjlogin\vo\LoginProperties.class
 com\example\ctsjlogin\web\LoginInterceptor.class
 com\example\ctsjlogin\web\LoginDo.class
 com\example\ctsjlogin\vo\Result.class
+com\example\ctsjlogin\CtsjLoginStarter.class

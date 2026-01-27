@@ -1,14 +1,41 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
 login:
+  redirect:
+    user: https://www.google.com
+    admin: http://localhost:8082/manager/Welcome.html
+
   enable: true
-  user-table: xxxx
-  name-column: aaaa
-  pwd-column: bbbb
-  email-column: cccc
-  # ?????
-  entity-class: com.yc.xxx.bean.User
-  # ??????????
+  user-table: user
+  name-column: username
+  pwd-column: password
+  email-column: email
+  entity-class: com.example.ctsjlogin.entity.User
   auth-urls:
     - /order.html
     - /user_info.html
     - /queryOrder.do
   send-email: 2292619425@qq.com
+
+spring:
+  main:
+    web-application-type: reactive
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my_community
+    username: root
+    password: 123456
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+# 映射文件位置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.ctsjlogin.entity
+

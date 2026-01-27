@@ -96,6 +96,7 @@ public class UserController {
     public Mono<ResponseEntity<Map<String, Object>>> AddUser(ServerWebExchange exchange) {
         return exchange.getSession().flatMap(session -> {
             Object attribute = session.getAttribute("verityCode");
+            System.out.println("AddUser 接口触发");
             if (attribute instanceof String) {
                 String vericode = (String) attribute;
                 String uname = exchange.getRequest().getQueryParams().getFirst("username");

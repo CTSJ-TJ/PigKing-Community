@@ -19,7 +19,7 @@
     <div class="turn">
       <div class="over">
         <form action="" class="login">
-          <h1>CTSJ的资源社区</h1>
+          <h1>PigKing 技术论坛系统</h1>
           <input type="text" name="uname" placeholder="用户名">
           <input type="password" name="upwd" placeholder="密码">
 		  <h3>验证码：</h3>
@@ -340,10 +340,20 @@
   <script src="js/ajax.js"></script>
   <script src="js/axios-0.18.0.js"></script>
   <script>
-      $(function (){
+    // 全局 axios 请求拦截器 —— 自动附加 userid
+    axios.interceptors.request.use(config => {
+      const uid = localStorage.getItem("userid");
+      if (uid) {
+        config.headers.userid = uid;   // 自动带上 userid
+      }
+      return config;
+    }, error => {
+      return Promise.reject(error);
+    });
+
+    $(function (){
         changepics();
       })
-
 	  function selectlogin(){
            changepics();
 		   var logvue =document.getElementById("mylogin");
@@ -373,90 +383,93 @@
 		  switchElement.style.display = 'block';
 		  switchLabel.style.display = 'block';
 	  }
-	  function userlogin(){
-          var logvue =document.getElementById("mylogin");
-          let uname = $(".login input[name='uname']").val();
-          let upwd = $(".login input[name='upwd']").val();
-          let usafe = $(".login input[name='ucheck']").val();
-          console.log(logvue.value)
-          if(logvue.value == "切换管理员登录"){
-              axios.get("user/login",{
-                params:{
-                  username: uname,
-                  userpwd: upwd,
-                  usafe: usafe
-                }
-              }).then(response=>{
-                  let codes=response.data.code
-                  console.log("who:"+codes)
-                  if(codes==66){
-                    alert("验证码错误！！！")
-                    location.reload();
-                  }else {
-                      let username=response.data.data.username;
-                      let userid=response.data.data.userid;
-                      axios.get("../user/setuser",{
-                        params:{myname:username,myid: userid}
-                      }).then(result=>{
-                           // alert(JSON.stringify(result.data));
-                           let code=result.data;
-                           if(code==1){
-                             document.location.href='Html/Testmain.html';
-                           }else{
-                             alert("登录失败！！！");
-                             location.reload();
-                           }
-                      });
-                  }
-              });
 
-          }else{
-            axios.get("admin/login",{
-              params:{
-                adminname: uname,
-                adminpwd: upwd,
-                usafe: usafe
-              }
-            }).then(response=>{
-              let codes=response.data.code
-              console.log("who:"+codes)
-              if(codes==66){
-                alert("验证码错误！！！")
-                location.reload();
-              }else {
-                alert(JSON.stringify(response.data.data));
-                let adminname=response.data.data.adminname;
-                // localStorage.setItem('username',username);
-                // alert(JSON.stringify(response.data.data);
-                document.location.href='manager/Welcome.html';
-              }
-            });
+    function userlogin() {
+      var logvue = document.getElementById("mylogin");
+      let uname = $(".login input[name='uname']").val();
+      let upwd = $(".login input[name='upwd']").val();
+      let usafe = $(".login input[name='ucheck']").val();
 
-          }
-	  }
+      // 判断是用户登录还是管理员登录（反向思维）
+      let isUserLogin = logvue.value === "切换管理员登录";
+      let url = isUserLogin ? "user/login" : "admin/login";
 
-	  function register(){
-		  // alert("this is register!!")
-        let uname=$(".sign input[name='adname']").val();
-        let upwd=$(".sign input[name='adpwd']").val();
-        let utpwd=$(".sign input[name='adtpwd']").val();
-        let adsafe=$(".sign input[name='adsafe']").val();
-        if(upwd == utpwd) {
-          ajax("POST", "user", {uname: uname, upwd: upwd, usafe: adsafe, op: 'register'}, function (rs) {
-            if (rs == 1) {
-              alert("注册成功!!!");
-              location.reload();
-            } else {
-              alert("注册失败!!!");
-              location.reload();
-            }
-          });
-        }else{
-           alert("密码不一致");
+      // ⭐ 根据登录类型构造不同的参数
+      let params = {
+        usafe: usafe
+      };
+
+      if (isUserLogin) {
+        alert("用户登录");
+        // 用户登录
+        params.username = uname;
+        params.userpwd = upwd;
+      } else {
+        // 管理员登录
+        alert("管理员登录");
+        params.adminname = uname;
+        params.adminpwd = upwd;
+      }
+
+      axios.get(url, { params }).then(response => {
+
+        let codes = response.data.code;
+        if (codes == 66) {
+          alert("验证码错误！！！");
+          location.reload();
+          return;
+        }
+
+        // 登录成功
+        let data = response.data.data || {};   // ⭐ 防止 undefined
+
+        // 保存 userid/adminid
+        if (data.userid) localStorage.setItem("userid", data.userid);
+        if (data.adminid) localStorage.setItem("userid", data.adminid);
+
+        // 后端返回跳转地址
+        let redirectUrl = data.redirectUrl;
+
+        if (!redirectUrl) {
+          alert("后端未返回跳转地址！");
+          return;
+        }
+
+        // 自动跳转
+        document.location.href = redirectUrl;
+      });
+    }
+
+
+    function register() {
+      let uname = $(".sign input[name='adname']").val();
+      let upwd = $(".sign input[name='adpwd']").val();
+      let utpwd = $(".sign input[name='adtpwd']").val();
+      let adsafe = $(".sign input[name='adsafe']").val();
+
+      if (upwd !== utpwd) {
+        alert("密码不一致");
+        location.reload();
+        return;
+      }
+      axios.post("user", {
+        uname: uname,
+        upwd: upwd,
+        usafe: adsafe,
+        op: "register"
+      }).then(response => {
+        let rs = response.data;
+        if (rs == 1) {
+          alert("注册成功!!!");
+          location.reload();
+        } else {
+          alert("注册失败!!!");
           location.reload();
         }
-	  }
-	  function changepics(){
+      });
+    }
+    //验证码显示
+    function changepics(){
           $(".pic").attr("src","image?"+Math.random());
 	  }
   </script>
