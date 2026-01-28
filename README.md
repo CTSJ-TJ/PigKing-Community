@@ -22,6 +22,13 @@
   
 </div>
 
+<h4>安装教程</h4>
+远程仓库<br>
+（1）查看当前仓库：git remote -v <br>
+（2）添加仓库：git remote add gitee https://gitee.com/t-ctsj/ctsj-community.git <br>
+（3）删除仓库：git remote remove origin <br>
+（4）提交三指令： （git add .） 、（git commit -m "update: 小改介绍"） 、GitHub版（git push origin main）、Gitee版（git push gitee main）
+
 #### 😶 **纯前端** 分支： **`master`**
 
 #### 👻 携带 **后端** 请求分支: **`master-fetch`**
