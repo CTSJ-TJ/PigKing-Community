@@ -5,7 +5,7 @@ eureka:
 
 login:
   redirect:
-    user: https://www.google.com
+    user: https://www.baidu.com
     admin: http://localhost:8082/manager/Welcome.html
 
   enable: true
@@ -23,12 +23,12 @@ login:
 spring:
   main:
     web-application-type: reactive
-
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_community
-    username: root
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    username: MyBaseData
     password: 123456
+
 
   redis:
     host: 127.0.0.1
@@ -38,4 +38,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.ctsjlogin.entity
+#  configuration:  #开启日志
+#      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 

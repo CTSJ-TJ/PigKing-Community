@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>11</java.version>
+
     </properties>
 
     <dependencies>
@@ -78,6 +79,20 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>23.2.0.0</version>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>oracle</id>
+            <url>https://maven.oracle.com</url>
+        </repository>
+    </repositories>
+
 
 </project>

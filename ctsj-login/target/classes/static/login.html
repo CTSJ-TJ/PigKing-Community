@@ -390,7 +390,7 @@
       let upwd = $(".login input[name='upwd']").val();
       let usafe = $(".login input[name='ucheck']").val();
 
-      // 判断是用户登录还是管理员登录
+      // 判断是用户登录还是管理员登录（反向思维）
       let isUserLogin = logvue.value === "切换管理员登录";
       let url = isUserLogin ? "user/login" : "admin/login";
 
@@ -400,13 +400,11 @@
       };
 
       if (isUserLogin) {
-        alert("用户登录");
         // 用户登录
         params.username = uname;
         params.userpwd = upwd;
       } else {
         // 管理员登录
-        alert("管理员登录");
         params.adminname = uname;
         params.adminpwd = upwd;
       }

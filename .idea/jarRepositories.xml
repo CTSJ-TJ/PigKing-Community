@@ -32,6 +32,11 @@
       <option name="url" value="https://maven.aliyun.com/repository/public" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="oracle" />
+      <option name="name" value="oracle" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="clojars" />
       <option name="name" value="clojars" />
       <option name="url" value="https://maven.aliyun.com/repository/public" />
