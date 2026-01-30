@@ -71,44 +71,26 @@
 
 - 入选 NaiveUI 社区精选资源推荐：[查看 NaiveUI 推荐列表](https://www.naiveui.com/zh-CN/light/docs/community)
 
-说明文档：
-![说明文档](readme/go-view-doc.png)
+说明文档：正在制作中...
 
-工作台：
-![工作台](readme/go-view-canvas.png)
+工作台：见上线
 
-请求配置：
-![请求配置](readme/go-view-fetch.png)
+请求配置：参考vue3
 
 数据过滤：
-![数据过滤](readme/go-view-filter.png)
 
-高级事件编辑:
-![高级事件编辑](readme/go-view-event.png)
-
-自定义组件颜色:
-![高级事件编辑](readme/go-view-echarts-color.png)
-
-快捷主页：
-![快捷主页](readme/go-view-indexpage.png)
-
-主题色：
-![主题色](readme/go-view-color.png)
-
-亮白主题：
-![亮白主题](readme/go-view-theme.png)
-
-最新动态: 整合字节图表框架 VChart[https://visactor.io/vchart](https://visactor.io/vchart)
-![图表框架 VChart](readme/go-view-vcharts.png)
 
 主要技术栈为：
 
-| 名称                | 版本  | 名称        | 版本   |
-| ------------------- | ----- | ----------- | ------ |
-| Vue                 | 3.2.x | TypeScript4 | 4.6.x  |
-| Vite                | 4.2.x | NaiveUI     | 2.34.x |
-| ECharts             | 5.3.x | Pinia       | 2.0.x  |
-| 详见 `package.json` | 😁    | 🥰          | 🤗     |
+| 名称           | 版本    | 名称        | 版本   |
+|--------------|-------| --------- | ------ |
+| Java         | 3.2.x | TypeScript4 | 4.6.x  |
+| Python       | 4.2.x | NaiveUI   | 2.34.x |
+| Vue系列        | 5.3.x | Pinia     | 2.0.x  |
+| Spring系列     | 6.3.x | 🥰        | 🤗     |
+| Copilot Ai   | 6.3.x    | 🥰        | 🤗     |
+
+
 
 开发环境:
 
@@ -137,7 +119,7 @@
 
 ## 安装
 
-请查看文档：[https://www.mtruning.club/](https://www.mtruning.club/)
+请查看文档：正在开发
 
 ## 代码提交
 
@@ -163,5 +145,5 @@ QQ 群：596495975
 
 ## PigKing Pro 部分功能展示
 
-体验地址： <a href="https://ai.goviewlink.com/saas/" target="_blank">正在开发中...</a>
+体验地址： <a href="" target="_blank">正在开发中...</a>
 
