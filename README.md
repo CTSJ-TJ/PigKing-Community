@@ -2,15 +2,12 @@
 <h2 align="center">
   PigKing 技术论坛系统
 </h2>
-
 <p align="center">
 
 </p>
-
 <h4 align="center">
 开源、精美、便捷的「数据可视化」低代码开发平台
 </h4>
-
 <h4 align="center">
 <img src="https://gitee.com/dromara/go-view/badge/star.svg?theme=gvp" style="position: relative; display: inline-block; top: 6px; border-radius: 0px;" />
 <img src="https://gitcode.com/GoView/go-view/star/badge.svg" style="display: inline-block; position: relative; top: 4px;">
@@ -19,19 +16,27 @@
 #### 项目介绍
 
 <div>
-  
+  本系统为Pig People学习专用，账户发行权归Pig king（联系方式见下文）所有，曾为通过阿里云服务器 ECS(CentOS 系统 )布署上去的 web 项目，
+  现为广大编程爱好者的技术资源社区，属于开源免费资源并持续更新，目的是不断提升Pig Pepole的能力，学习前沿技术。
+  欢迎各位成为Pig People中的一员。
 </div>
 
-<h4>安装教程</h4>
-远程仓库<br>
-（1）查看当前仓库：git remote -v <br>
-（2）添加仓库：git remote add gitee https://gitee.com/t-ctsj/ctsj-community.git <br>
-（3）删除仓库：git remote remove origin <br>
-（4）提交三指令： （git add .） 、（git commit -m "update: 小改介绍"） 、GitHub版（git push origin main）、Gitee版（git push gitee main）
+<h4>一、安装教程</h4>
+1、远程仓库<br>
+（1）查看当前仓库:git remote -v <br>
+（2）添加仓库: git remote add gitee https://gitee.com/t-ctsj/ctsj-community.git <br>
+（3）删除仓库: git remote remove origin <br>
+（4）提交过程指令: <br>
+    ❶添加变更：git add . <br>
+    ❷提交代码：git commit -m "update: 小改介绍"） <br>
+    ❸推送GitHub：git push origin main  <br>
+    ❹推送Gitee： git push gitee main  <br>
+    ❺提交冲突问题正在完善中...  <br>
+
 
 #### 😶 **纯前端** 分支： **`master`**
 
-#### 👻 携带 **后端** 请求分支: **`master-fetch`**
+#### 👻 携带 **后端** 请求分支: **`master`**
 
 #### 📚 PigKing-Foot **文档** 地址：[https://www.mtruning.club/](https://www.mtruning.club/)
 
@@ -39,21 +44,18 @@
 
 项目带后端-Demo 地址：[https://demo.mtruning.club/](https://demo.mtruning.club/)
 
-Cloud IDE 代码在线预览地址：[https://idegitee.com/dromara/go-view](https://idegitee.com/dromara/go-view)
 
-#### 🤯 后端项目看这里!
+#### 🤯 后端介绍
 
-后端地址（社区实现，仅供参考）：
+- ctsj-main: 类似于layout，主要是对系统的框架进行搭建，负责整体功能布局。
+- ctsj-eureka: 注册服务中心
+- ctsj-gateway: 路由服务与拦截
+- ctsj-ai: AI Agent的部署（正在开发），现在为API的调用
+- ctsj-login: 登录服务，独特的安全机制，并发的拦截。
+- ctsj-admin: 管理系统，权限、角色、信息的综合控制
+- ctsj-amuse: 多服务接口，引入外来服务
 
-- `JAVA` [https://gitee.com/MTrun/go-view-serve](https://gitee.com/MTrun/go-view-serve) (当前使用)
-- `.NET` [https://gitee.com/sun_xiang_yu/go-view-dotnet](https://gitee.com/sun_xiang_yu/go-view-dotnet)
-- `NODE` [https://gitee.com/qwdingyu/led](https://gitee.com/qwdingyu/led)
-- `Docker 镜像` [https://gitee.com/AHEAD4/go-view-docker](https://gitee.com/AHEAD4/go-view-docker)
-- `GO-goframe` [https://gitee.com/bufanyun/go-view-server](https://gitee.com/bufanyun/go-view-server)
-- `GO-gin` [https://gitee.com/ls1990/go-view-serve](https://gitee.com/ls1990/go-view-serve)
-- `接口文档` [https://docs.apipost.cn](https://docs.apipost.cn/preview/5aa85d10a59d66ce/ddb813732007ad2b?target_id=84dbc5b0-158f-4bcb-8f74-793ac604ada3) (不是最新, 以前端代码为准)
-
-#### 整体介绍
+#### 前端介绍
 
 - 框架：基于 `Vue3` 框架编写，使用 `hooks` 写法抽离部分逻辑，使代码结构更加清晰；
 
@@ -155,10 +157,11 @@ Cloud IDE 代码在线预览地址：[https://idegitee.com/dromara/go-view](http
 
 QQ 群：596495975
 
-<img width="260px" src="readme/go-view-qq.jpg" alt="QQ群" style="border-radius: 20px" />
+版权问题请联系：2292619425@qq.com
+
+备注：侵权必究，PigKing People 将维护到底！！！
 
 ## PigKing Pro 部分功能展示
 
 体验地址： <a href="https://ai.goviewlink.com/saas/" target="_blank">正在开发中...</a>
 
-![渲染海报](readme/logo-poster.png)
